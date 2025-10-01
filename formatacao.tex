@@ -1,0 +1,145 @@
+% Common packages
+\usepackage[portuguese]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage[pdfborder={0 0 0}]{hyperref}
+
+% Page setup
+\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.0cm]{geometry}
+\raggedbottom % Não obriga as páginas pares e ímpares a terem a mesma altura de texto.
+
+% Font
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{sansmathfonts}
+\usepackage{helvet}
+
+% headers and footers
+\pagestyle{plain} % Header is clear and the footer contains only the page number
+
+% Paragraph formatting
+\setlength{\parindent}{25pt}
+\setlength{\parskip}{0pt}
+\linespread{1.3}
+
+% Path for figures
+\graphicspath{{.}{figuras/}}
+
+% Captions
+\usepackage[font=small,labelfont=bf,labelsep=quad,justification=justified,singlelinecheck=false]{caption}
+\setlength{\abovecaptionskip}{6pt}
+\setlength{\belowcaptionskip}{6pt}
+
+% Lists formatting
+\usepackage{enumitem} % For manipulating the whitespace between and within lists
+
+% Substituir Appendice por Anexo
+\AtBeginDocument{\renewcommand\appendixname{Anexo}}
+
+% Bibliography
+\bibliographystyle{unsrtnat}
+\usepackage[numbers]{natbib}
+
+% Math
+\everymath{\displaystyle}
+
+% New commands
+\newcommand{\palavraschave}[1]{%
+	{\par\vspace{36pt}\noindent\Large\bfseries Palavras chave}\vspace{12pt}\par
+	\noindent #1
+    }
+
+\newcommand{\keywords}[1]{%
+	{\par\vspace{36pt}\noindent\Large\bfseries Key words}\vspace{12pt}\par
+	\noindent #1
+    }
+
+% Alexandre Figueiredo
+\usepackage{float}
+\usepackage{soul}
+\usepackage{xcolor}
+\sethlcolor{yellow} % ou qualquer outra cor, ex: lightgray, lime, etc.
+\usepackage{glossaries}
+\makeglossaries
+\usepackage{listings}
+\usepackage{pdfpages} % put this in the preamble
+\usepackage{lscape}
+
+\usepackage{xcolor}
+% Colours
+\definecolor{codebg}{rgb}{0.98,0.98,0.98}
+\definecolor{codekeyword}{rgb}{0.0,0.2,0.6}    % dark blue keywords
+\definecolor{codeclass}{rgb}{0.8,0.36,0.0}     % brownish for classes/types
+\definecolor{codefunc}{rgb}{0.55,0.0,0.55}     % purple for functions
+\definecolor{codecomment}{rgb}{0.25,0.5,0.25}  % green comments
+\definecolor{codestring}{rgb}{0.6,0.0,0.0}     % red strings
+\definecolor{codenumber}{rgb}{0.5,0.5,0.5}     % grey line numbers
+
+% Define style
+\lstdefinestyle{BetterCPP}{
+  language=C++,
+  backgroundcolor=\color{codebg},
+  basicstyle=\ttfamily\small,
+  keywordstyle=\bfseries\color{codekeyword},
+  commentstyle=\itshape\color{codecomment},
+  stringstyle=\color{codestring},
+  numberstyle=\tiny\color{codenumber},
+  numbers=left,
+  numbersep=6pt,
+  frame=tb,
+  rulecolor=\color{black},
+  breaklines=true,
+  tabsize=2,
+  showstringspaces=false,
+  morekeywords={string,vector,map,set,bool,uint8_t,uint16_t,uint32_t,int8_t},
+  emph={IMU_ICM_20948,IMUData,Acceleration,Gyroscope,Magnetometer,Orientation,GPS_BN880,GPSData,LoRaDuplex,LoRaProto,Waypoint,WaypointsMessage,StateMessage,Control,USV,MovementTwoThrusters,Thruster,ThrusterController,Led,Expander,Motor,Movement,Robot,Data,Interrupt,MotorController},
+  emphstyle=\color{codeclass}\bfseries,
+  emph={[2]setup,loop,begin,update,receive,sendPacket,receivePacket,getGPSData,getIMUData,getMotors,getLoRaDuplex,getLoRaProto,getLastReceivedMessage,enableDebug,enableInfo,print,printDebug,printf,printLine,getState,setState,setWaypoints,setCourse,back,front,stop,slow,curve,left,right,block,reset,setPWM,setSpeed,setDirection,resetCounter,hasInterrupt,enableCrc,setTxPower,setSpreadingFactor,setSignalBandwidth,setCodingRate4,blink,StateMessage_Manual_State,size,setMinPwmOn,setMaxPwmOn,pulseToTicks,on,off,manualControl,automaticControl,platform,board,framework,lib_ldf_mode,lib_deps,monitor_speed,monitor_filters,check_tool},
+  emphstyle={[2]\color{codefunc}}
+}
+
+\usepackage{tikz}
+\usepackage{aeguill}
+\usepackage{siunitx}
+\usepackage{multimedia}
+\usepackage{animate}
+
+% \colorlet{HyperRefColorLink}{blue!50!black}   % Azul escuro
+% \colorlet{HyperRefColorAnchor}{black!100}     % Preto
+% \colorlet{HyperRefColorCite}{green!50!black}  % Verde escuro
+% \colorlet{HyperRefColorFile}{cyan!50!black}   % Ciano escuro
+% \colorlet{HyperRefColorMenu}{red!50!black}    % Vermelho escuro
+% \colorlet{HyperRefColorRun}{cyan!50!black}    % Ciano escuro
+% \colorlet{HyperRefColorUrl}{magenta!50!black} % Magenta escuro
+
+% \definecolor{HyperRefColorBorderLink}{rgb}{1, 0, 0}
+% \definecolor{HyperRefColorBorderCite}{rgb}{0, 1, 0}
+% \definecolor{HyperRefColorBorderFile}{rgb}{0, 0.5, 0.5}
+% \definecolor{HyperRefColorBorderMenu}{rgb}{1, 0, 0}
+% \definecolor{HyperRefColorBorderRun}{rgb}{0.7, 0.7, 0.7}
+% \definecolor{HyperRefColorBorderUrl}{rgb}{0, 1, 1}
+
+% \colorlet{HyperRefColorWhite}{white!100}
+
+% \usepackage{fancyvrb}
+% \hypersetup{
+% 	colorlinks=true,
+% 	linkcolor=HyperRefColorLink,
+% 	anchorcolor=HyperRefColorAnchor, 
+% 	citecolor=HyperRefColorCite,
+% 	filecolor=HyperRefColorFile,
+% 	menucolor=HyperRefColorMenu,
+% 	runcolor=HyperRefColorRun,
+% 	urlcolor=HyperRefColorLink,
+% 	%allcolors=HyperRefColorWhite,
+% 	citebordercolor=HyperRefColorBorderCite,
+% 	filebordercolor=HyperRefColorBorderFile,
+% 	linkbordercolor=HyperRefColorBorderLink,
+% 	menubordercolor=HyperRefColorBorderMenu,
+% 	urlbordercolor=HyperRefColorBorderUrl,
+% 	runbordercolor=HyperRefColorBorderRun,
+% 	%allbordercolors=HyperRefColorWhite,
+% }

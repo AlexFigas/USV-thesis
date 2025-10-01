@@ -1,0 +1,13 @@
+\chapter*{Abstract}
+
+This master's dissertation presents the development of a cyber-physical system for the autonomous control of Unmanned Surface Vehicles (\acrfull{usv}). The system was designed to be modular, extensible, and oriented towards the integration of multiple motors, sensors, and communication interfaces, ensuring robustness and adaptability to different operational scenarios.  
+
+The proposed architecture is based on an \gls{esp32} microcontroller with native support for \gls{i2c}, \gls{uart}, and \gls{lora}, responsible for controlling various modules, including sensors and actuators. The main modules include: i) brushless thrusters controlled by \acrfull{esc}, capable of providing bidirectional thrust; ii) an \acrfull{imu}, supplying yaw, pitch, and roll measurements to guarantee stability and trajectory correction; iii) a \acrfull{gps} receiver, enabling accurate navigation through geospatial coordinates; and iv) a \gls{lora}-based communication module, providing long-range telemetry and real-time route updates with low energy consumption.  
+
+From the \emph{software} perspective, the solution was structured into independent libraries that encapsulate propulsion, sensing, communication, and control functionalities. This modular approach fosters code reusability, simplifies maintenance, and ensures system scalability. Communication efficiency was enhanced by employing \emph{Protocol Buffers} (\emph{Protobuf}), which significantly reduced the \gls{toa} of \gls{lora} messages, leading to higher energy efficiency, lower collision probability, and increased effective range.  
+
+Experimental validation included incremental \emph{hardware} and \emph{software} testing, ranging from isolated thruster control to the full integration of all modules into a functional prototype. The results demonstrated the system's ability to follow routes defined by \acrfull{gps} waypoints, store telemetry data, and operate in both manual and autonomous modes.  
+
+It is concluded that the developed system provides a solid foundation for future advancements in \gls{usv}, particularly in the application of advanced controllers (\acrfull{pid} or \acrfull{lqr}), integration into larger-scale maritime platforms, and deployment in real-world scenarios such as environmental monitoring, scientific research, and coastal operations.
+
+\keywords{\gls{usv}; Cyber-Physical Systems; \gls{lora}; \gls{esp32}; Autonomous Navigation.}

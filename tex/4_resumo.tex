@@ -1,0 +1,16 @@
+% !TeX spellcheck = pt_PT2
+
+\chapter{Resumo}
+
+O trabalho final de mestrado apresentado neste relatório descreve o desenvolvimento de um sistema ciberfísico para controlo autónomo de embarcações do tipo \acrfull{usv}. O sistema foi concebido de forma modular, expansível e orientado para a integração de múltiplos motores, sensores e interfaces de comunicação, assegurando robustez e adaptabilidade a diferentes cenários operacionais.
+
+A arquitetura proposta baseia-se na utilização de um microcontrolador \gls{esp32} com suporte nativo a \gls{i2c}, \gls{uart} e \gls{lora}, para controlo dos diferentes módulos, incluindo sensores e atuadores. Entre os principais módulos incluem-se: i) propulsores \emph{brushless} controlados por \acrfull{esc}, capazes de fornecer empuxo bidirecional; ii) um \acrfull{imu}, que fornece medições de \emph{yaw}, \emph{pitch} e \emph{roll} para garantir a estabilidade e a correção de trajetória; iii) um recetor \acrfull{gps}, responsável pela navegação precisa através de coordenadas geoespaciais; e iv) um módulo de comunicação \acrfull{lora}, que assegura telemetria de longo alcance e receção de rotas em tempo real com baixo consumo energético.
+
+Do ponto de vista de \emph{software}, a solução foi estruturada em bibliotecas independentes que encapsulam funções de propulsão, sensorização, comunicação e controlo. Esta abordagem promove a reutilização de código, facilita a manutenção e garante a escalabilidade do sistema. A comunicação foi otimizada através do uso de \emph{Protocol Buffers} (\emph{Protobuf}), reduzindo significativamente o tempo de transmissão (\gls{toa}) em mensagens \acrfull{lora}, o que contribui para maior eficiência energética, menor probabilidade de colisões e aumento do alcance efetivo.
+
+A validação experimental incluiu testes incrementais de \emph{hardware} e \emph{software}, desde o controlo isolado de propulsores até à integração de todos os módulos num protótipo funcional. Os resultados demonstraram a capacidade do sistema em seguir rotas definidas por waypoints \acrfull{gps}, armazenar dados de telemetria e operar em modo manual ou automático.
+
+Conclui-se que o sistema desenvolvido constitui uma base sólida para futuras evoluções em \acrfull{usv}, nomeadamente a aplicação de controladores avançados (\acrfull{pid} ou \acrfull{lqr}), a integração em plataformas marítimas de maior escala, e a utilização em cenários reais de monitorização ambiental, investigação científica e operações costeiras.
+
+\vspace{-0.5cm}
+\palavraschave{Palavras-chave: \gls{usv}; Sistemas Ciberfísicos; \gls{lora}; \gls{esp32}; Navegação Autónoma.}

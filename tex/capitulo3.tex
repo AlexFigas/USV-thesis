@@ -1,0 +1,47 @@
+\chapter{Modelo Proposto}
+\label{ch:modeloProposto}
+
+O modelo proposto nesta \gls{tfm} consiste no desenvolvimento de um sistema ciberfísico para o controlo autónomo de embarcações do tipo \gls{usv}, concebido de forma modular e expansível. A modularidade é garantida pela utilização do barramento \gls{i2c} de comunicação entre os diferentes módulos de \emph{hardware}. A escolha do \gls{i2c} como base do sistema justifica-se pela sua simplicidade de implementação, baixo número de ligações necessárias e pela possibilidade de integrar múltiplos dispositivos no mesmo barramento através da atribuição de endereços únicos. Esta abordagem garante escalabilidade, permitindo a integração de novos sensores, atuadores, ou até mesmo diferentes microcontroladores, desde que estes suportem \gls{i2c}, sem alterações profundas na arquitetura.
+
+De forma a apresentar esta proposta de forma estruturada, este capítulo encontra-se organizado em duas secções principais. Na Secção~\ref{sec:requisitos} são descritos os requisitos funcionais e não funcionais que orientam o desenvolvimento do sistema, identificando as funcionalidades essenciais e as propriedades globais de desempenho e escalabilidade. Já na Secção~\ref{sec:abordagem} é detalhada a abordagem modular seguida, explicitando os principais módulos de \emph{hardware} e \emph{software} que compõem o sistema, bem como as suas interações. Esta estrutura permite compreender de forma clara tanto as bases conceptuais como a implementação prática do modelo proposto.
+
+\section{Requisitos}
+\label{sec:requisitos}
+
+Os requisitos funcionais correspondem a descrições formais e detalhadas das funcionalidades que o sistema deve disponibilizar, especificando as ações que este deve ser capaz de executar e a forma como deve responder às diferentes interações do utilizador ou de outros sistemas.  
+
+Por sua vez, os requisitos não funcionais referem-se a propriedades globais do sistema que não estão diretamente associadas a uma funcionalidade específica, mas que condicionam o seu comportamento e qualidade de operação. Entre estes incluem-se aspetos como o desempenho, a segurança, a usabilidade, a escalabilidade e a fiabilidade, que são determinantes para garantir a robustez e adequação da solução em cenários reais de utilização.
+
+Os requisitos principais definidos para o sistema são:
+
+\begin{enumerate}
+    \item O sistema deve ser expansível através do barramento \gls{i2c}, assegurando a fácil integração de novos módulos.  
+    Requisito não funcional, uma vez que não descreve uma funcionalidade direta do sistema, mas sim uma característica de extensibilidade e escalabilidade, que garante a adaptabilidade futura da arquitetura.  
+
+    \item O sistema deve utilizar comunicação de longo alcance baseada em tecnologia \gls{lora}, de forma a permitir telemetria e atualização de rotas em tempo real, mesmo em cenários remotos.  
+    Requisito funcional, dado que descreve explicitamente uma ação que o sistema deve executar, isto é, a capacidade de estabelecer comunicação sem fios de longo alcance para troca de dados críticos com a estação de controlo.
+\end{enumerate}
+
+Desta forma, observa-se que o primeiro requisito reflete uma propriedade estrutural do sistema, relacionada com a sua capacidade de evolução e integração modular, enquanto o segundo requisito define uma funcionalidade central para a operação do veículo, indispensável para o cumprimento dos objetivos de navegação autónoma e monitorização remota.
+
+\section{Abordagem}
+\label{sec:abordagem}
+
+Para assegurar a operação autónoma, o sistema integra diferentes módulos, tal como apresentado na Figura \ref{fig:modulos-usv}. 
+
+\begin{figure}[H]
+  \centering
+  \resizebox{0.8\textwidth}{!}{%
+    \input{uml/arquitetura-usv.tex}%
+  }
+  \caption{Diagrama da arquitetura modular do \gls{usv}}}
+  \label{fig:modulos-usv}
+\end{figure}
+
+O \acrfull{gps} é responsável pela determinação da posição geográfica da embarcação, fornecendo coordenadas de latitude e longitude necessárias para o seguimento de rotas. O \acrfull{imu}, por sua vez, mede aceleração, rotação e orientação da embarcação nos eixos tridimensionais, permitindo a correção de trajetória e a compensação de efeitos de correntes e ondas. A interface de comunicação \acrfull{lora} é utilizada para o envio de dados de telemetria, a receção de novas rotas e a indicação do estado de autonomia (manual ou automático). No modo manual, possibilita ainda a transmissão de comandos de movimento (frente, trás, esquerda e direita), garantindo uma comunicação fiável em cenários de operação prolongada e em zonas sem infraestrutura de telecomunicações.
+
+Adicionalmente, foi integrado um módulo de armazenamento em cartão SD, cuja função é registar localmente os dados de telemetria recolhidos durante a operação. Este armazenamento persistente assegura que a informação relativa à trajetória, parâmetros de navegação e estados do sistema possa ser posteriormente analisada, mesmo em situações em que a comunicação de longo alcance esteja temporariamente indisponível. Esta funcionalidade é essencial para a validação experimental, análise pós-missão e suporte a algoritmos de diagnóstico e melhoria contínua.
+
+O sistema deverá ainda ser capaz de controlar até quatro motores de forma independente, recorrendo a sinais \gls{pwm} gerados pelo microcontrolador. O controlo distribuído de motores oferece flexibilidade na navegação e aumenta a manobrabilidade do \gls{usv}.
+
+A abordagem modular proposta assegura que a arquitetura não se limita aos sensores e interfaces inicialmente integrados, permitindo a evolução futura do sistema com a adição de novos módulos, como sensores de ambiente, câmaras ou interfaces de comunicação alternativas. Desta forma, o modelo apresentado constitui uma solução escalável, robusta e alinhada com os requisitos de flexibilidade e adaptabilidade para missões em ambientes marítimos complexos.

@@ -1,0 +1,73 @@
+% !TeX spellcheck = pt_PT2
+
+% \chapter{Introdução}
+
+% O presente \textit{template} \LaTeX\ foi elaborado de acordo com as regras de formatação aprovadas pelo CTC. Tenha em atenção que, de acordo com essas regras, o seu TFM não deve ultrapassar 150 páginas, excluindo eventuais anexos.
+
+% Após deszipar o ficheiro \verb|TFM.zip| notará que existem três ficheiros, a saber: \verb|TFM.tex|, \verb|formatacao.tex| e \verb|bibdatabase.bib|. O primeiro é o ficheiro principal. É este o ficheiro a ser compilado para produzir o TFM. O segundo contém definições de formatação e o terceiro os dados das referências bibliográficas. Há também duas diretorias: \verb|figuras| e \verb|tex|, a primeira destinada a guardar todas as figuras do TFM e a segunda todos os ficheiros TEX essenciais à compilação do documento, incluindo um ficheiro TEX por cada capítulo.
+
+% Se desejar iniciar-se como utilizador \LaTeX\ deve começar por instalar no computador uma versão do compilador adequada ao seu sistema operativo. No caso do Windows, um dos compiladores mais utilizados é o MikTeX, que pode ser instalado a partir do endereço:
+
+% \begin{center}
+% 	\url{http://miktex.org/}	
+% \end{center}
+
+% Os ficheiros TEX podem ser criados a partir de qualquer editor de texto, mas existem alguns desenvolvidos especificamente para esse fim. Um editor muito versátil é o TeXstudio, que pode ser descarregado a partir do endereço:
+
+% \begin{center}
+% 	\url{http://www.texstudio.org/}
+% \end{center}
+
+% Se não tem nenhuma noção de \LaTeX\ e deseja ter uma ideia de como o sistema funciona, veja o documento first-latex-doc.pdf, que pode ser descarregado a partir de:
+
+% \begin{center}
+% 	\url{https://ctan.org/tex-archive/info/first-latex-doc}
+% \end{center}
+
+% Um excelente manual do sistema está disponível gratuitamente em:
+
+% \begin{center}
+% 	\url{https://en.wikibooks.org/wiki/LaTeX}
+% \end{center}
+
+% O presente documento exemplifica o uso dos comandos para produzir as unidades de texto típicas de textos científicos, nomeadamente:
+
+% \begin{enumerate}[noitemsep]
+% 	\item figuras,
+% 	\item tabelas,
+% 	\item listas,
+% 	\item equações matemáticas,
+% 	\item bibliografia e sua referenciação. 
+% \end{enumerate}
+
+\chapter{Introdução}
+\label{ch:introducao}
+
+O presente trabalho tem como objetivo o desenvolvimento de um sistema ciberfísico para o controlo de veículos autónomos, concebido de forma genérica para abranger tanto plataformas terrestres como marítimas, sendo o caso de estudo desta \gls{tfm} a aplicação a um \gls{usv} com capacidade de navegação autónoma. O sistema a ser desenvolvido deverá ser capaz de controlar até quatro motores de forma independente, garantindo a manobrabilidade necessária para diferentes cenários de operação. Além disso, será integrado com um conjunto de sensores essenciais, incluindo: i) sensores de temperatura e humidade, para monitorização ambiental; ii) um \gls{imu}, responsável por medir e ajustar a orientação e aceleração do \gls{usv}; e iii) um \gls{gps}, para navegação precisa através de coordenadas geoespaciais.
+
+Para permitir a comunicação de longo alcance, o sistema incluirá uma interface \gls{lora}, que viabilizará o envio de dados de telemetria e a receção de novas rotas de navegação de forma eficiente, mesmo em áreas remotas.
+
+O protótipo desenvolvido deverá ser capaz de seguir autonomamente uma rota constituída por coordenadas \gls{gps} previamente definidas. Durante a navegação, o sistema armazenará os dados de telemetria, incluindo a posição e o estado da embarcação, em um cartão de memória, permitindo não apenas a posterior avaliação do desempenho do veículo, mas também o estudo detalhado da trajetória efetivamente seguida em comparação com a rota planeada.
+
+\section{Motivação}
+\label{sec:motivacao}
+
+A motivação para o desenvolvimento deste trabalho surge da necessidade crescente de soluções tecnológicas que permitam explorar, monitorizar e intervir em ambientes marítimos de forma autónoma, segura e eficiente. Os \gls{usv} representam uma alternativa promissora a embarcações tripuladas em missões de risco ou em operações que requerem elevada precisão, contribuindo para áreas como a investigação científica, a monitorização ambiental, a defesa e a segurança marítima.  
+
+Para além desta motivação aplicada, o trabalho insere-se num percurso académico e científico que começou com o desenvolvimento de um robô didático \cite{didactic-robot-thesis}, concebido para fins pedagógicos. Esse projeto permitiu consolidar conhecimentos fundamentais sobre controlo de movimento, integração de sensores e comunicação sem fios. Com base nessa experiência, emergiu a necessidade de validar, em contexto real e com maior complexidade, se os princípios teóricos e arquiteturais aplicados em ambientes laboratoriais são escaláveis e eficazes em sistemas ciberfísicos de maior dimensão. Assim, esta \gls{tfm} não só visa propor uma solução tecnológica inovadora, como também demonstrar, através de validação experimental, que os conceitos previamente adquiridos podem ser aplicados com sucesso a um \gls{usv}.  
+
+\section{Contextualização}
+\label{sec:contextualizacao}
+
+O desenvolvimento de veículos marítimos autónomos tem registado um crescimento acentuado a nível mundial, impulsionado pela necessidade de monitorização de ecossistemas marinhos, exploração de zonas remotas e apoio a operações de defesa. Em particular, Portugal, com a sua extensa \gls{zee}, apresenta um contexto altamente relevante para a adoção de tecnologias de robótica marítima.  
+
+Os \gls{usv} baseados em propulsão elétrica, equipados com sensores e módulos de comunicação de longo alcance, têm-se afirmado como plataformas versáteis para missões de curta e média duração. No entanto, o elevado custo associado às soluções comerciais limita a sua utilização em contextos académicos e de investigação aplicada.  
+
+Neste enquadramento, o presente trabalho resulta da colaboração entre o \gls{isel} e a \gls{enidh}, instituições que partilham o objetivo de promover soluções inovadoras e acessíveis no domínio da robótica marítima. Esta parceria não só viabilizou o desenvolvimento de um protótipo de baixo custo, modular e escalável, como também criou condições privilegiadas para a realização de ensaios práticos em ambiente real. Foi nesse âmbito que o sistema pôde ser testado no \gls{repmus25}, mais concretamente no subevento \gls{rex25}, da Marinha Portuguesa e Escola Naval, permitindo validar conceitos avançados de navegação autónoma e comunicação sem fios em condições operacionais próximas das que se encontram em missões reais.
+
+Todo o código desenvolvido nesta \gls{tfm} encontra-se em um repositório remoto público (\emph{open source}) no GitHub \cite{github-usv}. Este processo assegurou a rastreabilidade das alterações, a organização das diferentes versões do código e a possibilidade de colaboração futura.
+
+\section{Organização do Documento}
+\label{sec:organizacao}
+
+Este documento encontra-se estruturado em sete capítulos principais. O Capítulo \ref{ch:introducao} apresenta a introdução ao trabalho, incluindo a motivação, a contextualização e a organização da \gls{tfm}. O Capítulo \ref{ch:estadodaarte} descreve o estado da arte, explorando soluções existentes e antecedentes relevantes, incluindo o projeto do robô didático que serviu de base conceptual. O Capítulo \ref{ch:modeloProposto} define o modelo proposto, os requisitos do sistema e a abordagem metodológica adotada. O Capítulo \ref{ch:arquitetura} detalha a arquitetura do sistema, abrangendo os módulos de \emph{hardware} e \emph{software} necessários para a operação do \gls{usv}. O Capítulo \ref{ch:implementacao} aborda a implementação prática, descrevendo o processo de integração e as soluções desenvolvidas. O Capítulo \ref{ch:validacaoTestes} apresenta a validação e os testes realizados, desde ensaios incrementais até à validação em ambiente real no exercício internacional \gls{repmus25}. Por fim, o Capítulo \ref{ch:conclusoesTrabalhoFuturo} apresenta as conclusões obtidas e as perspetivas para trabalho futuro, destacando potenciais evoluções e aplicações do sistema.

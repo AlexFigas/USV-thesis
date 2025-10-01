@@ -1,0 +1,59 @@
+% !TEX root = TFM.tex
+
+\documentclass[a4paper,11pt]{book}
+
+\input{formatacao}
+
+\begin{document}
+
+\include{./tex/1_rosto}
+
+\frontmatter % Inicialização da paginação (números romanos)
+\include{./tex/2_agradecimentos}
+\include{./tex/3_declaracao}
+\include{./tex/4_resumo}
+\include{./tex/5_abstract}
+
+\renewcommand{\contentsname}{Índice de Conteúdos}
+\tableofcontents
+
+\addcontentsline{toc}{chapter}{Índice de Conteúdos}
+
+\renewcommand{\listfigurename}{Índice de Figuras}
+\listoffigures
+\addcontentsline{toc}{chapter}{Índice de Figuras}
+
+\renewcommand{\listtablename}{Índice de Tabelas}
+\listoftables
+\addcontentsline{toc}{chapter}{Índice de Tabelas}
+
+\renewcommand{\lstlistlistingname}{Índice de Listagens}
+\lstlistoflistings
+\addcontentsline{toc}{chapter}{Índice de Listagens}
+\renewcommand{\lstlistingname}{Listagem}
+
+\renewcommand{\glossaryname}{Índice de Acrónimos}
+\printglossary
+\addcontentsline{toc}{chapter}{Índice de Acrónimos}
+
+\include{./tex/6_simbologia}
+
+\mainmatter % Reinicialização da paginação (números árabes)
+\include{./tex/capitulo1}
+\include{./tex/capitulo2}
+\include{./tex/capitulo3}
+\include{./tex/capitulo4}
+\include{./tex/capitulo5}
+\include{./tex/capitulo6}
+\include{./tex/capitulo7}
+
+\appendix
+\include{./tex/x_anexoA}
+
+\backmatter
+\bibliographystyle{apalike}
+\bibliography{bibdatabase}
+\addcontentsline{toc}{chapter}{Bibliografia}
+
+\end{document}
+

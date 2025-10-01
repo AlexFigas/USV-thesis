@@ -1,0 +1,25 @@
+{
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "build.sh",
+      "tools": [
+        "buildsh"
+      ]
+    }
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "buildsh",
+      "command": "bash",
+      "args": [
+        "./build.sh"
+      ]
+    }
+  ],
+  "latex-workshop.view.pdf.viewer": "tab",
+  "latex-workshop.synctex.afterBuild.enabled": true,
+  "latex-workshop.latex.autoBuild.run": "onSave",
+  "latex-workshop.latex.recipe.default": "build.sh",
+  "editor.wordWrap": "on",
+  "cSpell.language": "pt-PT"
+}
