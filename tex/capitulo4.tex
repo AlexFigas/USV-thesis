@@ -25,7 +25,24 @@ Para este processo foi utilizada uma impressora Ender 3 de primeira geração, m
 
 No centro da estrutura foi instalada uma caixa estanque, destinada a albergar a eletrónica responsável pelo controlo do \gls{usv}, incluindo sensores, interfaces de comunicação e unidades de processamento. Esta caixa integra todos os elementos eletrónicos necessários ao funcionamento do sistema. 
 
-A escolha da estrutura apresentada na Figura \ref{fig:usv-francisco} revela vantagens logísticas significativas. O \gls{usv}-enautica1, embora robusto, apresenta dimensões e peso consideráveis, o que dificulta o seu transporte e limita a sua utilização em testes frequentes. Em contraste, a adoção de um catamarã mais pequeno e leve permite a realização de ensaios de navegação e validação de algoritmos de forma prática e acessível, assegurando maior portabilidade e facilidade de operação.  
+A escolha da estrutura apresentada na Figura \ref{fig:usv-francisco} revela vantagens logísticas significativas. A Figura \ref{fig:pcb-esquematica-vs-real} compara o protótipo desenvolvido com o \gls{usv}-enautica1 da Sea2Future \cite{sea2future, sea2future2}, já ilustrado previamente na Figura \ref{fig:sea2future}.
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.39\linewidth}
+        \centering
+        \includegraphics[height=6cm]{figuras/usv-1-2-1.jpg}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.59\linewidth}
+        \centering
+        \includegraphics[height=6cm]{figuras/usv-1-2-2.jpg}
+    \end{minipage}
+    \caption{Comparação entre o \gls{usv}-enautica1 e o protótipo desenvolvido}
+    \label{fig:pcb-esquematica-vs-real}
+\end{figure}
+
+O \gls{usv}-enautica1 apresenta dimensões e peso consideráveis, o que dificulta o seu transporte e limita a sua utilização em testes frequentes. Em contraste, a adoção de um catamarã mais pequeno e leve permite a realização de ensaios de navegação e validação de algoritmos de forma prática e acessível, assegurando maior portabilidade e facilidade de operação.  
 
 É importante salientar que o \gls{usv}-enautica1 utiliza o mesmo tipo de motores \gls{pwm} integrados no protótipo desenvolvido nesta \gls{tfm}, garantindo assim compatibilidade total com os procedimentos de controlo e validação aqui descritos. Esta correspondência tecnológica assegura que os resultados obtidos no protótipo são representativos e transferíveis para sistemas de maior escala.
 

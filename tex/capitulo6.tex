@@ -25,6 +25,37 @@ Todos os ensaios desta fase foram realizados em ambiente controlado de laborató
 
 \section{Validação em Ambiente Real}
 
+Inicialmente, procedeu-se à validação da \gls{pcb} desenvolvida através da sua aplicação no robô didático. Tal como referido em \cite{didactic-robot-thesis}, o \emph{software} deste robô foi concebido para funcionar em qualquer \emph{hardware} compatível com \gls{i2c} e \gls{pwm}, incluindo, portanto, a nova \gls{pcb}. Esta etapa permitiu confirmar novamente o conceito do robô didático, garantindo a compatibilidade entre o \emph{software} existente e o novo \emph{hardware}, bem como o correto funcionamento dos módulos de controlo e comunicação antes da sua integração no protótipo do \gls{usv}.  
+
+A Figura \ref{fig:robot-didatico-comparacao} apresenta uma comparação entre o robô didático original e a versão equipada com a \gls{pcb} desenvolvida, evidenciando as modificações introduzidas e a integração bem-sucedida da nova solução de \emph{hardware}.  
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{figuras/robot-1-2.jpg}
+    \caption{Comparação entre o robô didático original (esquerda) e a versão equipada com a \gls{pcb} desenvolvida (direita).}
+    \label{fig:robot-didatico-comparacao}
+\end{figure}
+
+O vídeo apresentado na Figura \ref{fig:video-robot-didatico} ilustra o robô didático a ser controlado remotamente via \gls{lora}, com a \gls{pcb} desenvolvida a gerir os motores e a interpretar os comandos de movimento recebidos.  
+
+\begin{figure}[H]
+    \centering
+    \href{https://youtu.be/Zvn3hBrHmkU}{%
+        \begin{tikzpicture}
+            \node[inner sep=0pt] {\includegraphics[width=0.5\linewidth]{didactic-robot-usb.png}};
+            % Draw a red play button in the center
+            \draw[fill=red, opacity=0.8] (0,0) circle [radius=0.7cm];
+            \fill[white] (-0.25,0.35) -- (-0.25,-0.35) -- (0.4,0) -- cycle;
+        \end{tikzpicture}%
+    }
+    \caption[Demonstração do robô didático em funcionamento com a \gls{pcb} desenvolvida]{Demonstração do robô didático \cite{didactic-robot-thesis} em funcionamento com a \gls{pcb} desenvolvida. (clique na imagem para abrir o vídeo no YouTube).}
+    \label{fig:video-robot-didatico}
+\end{figure}
+
+Durante o ensaio foram enviados comandos em intervalos regulares de 10 segundos, alternando sequencialmente entre deslocamentos para a frente e para trás (50 cm cada), bem como rotações à direita e à esquerda, ambas com raio de 50 cm e ângulo de curvatura de 90 graus. Este teste demonstrou a correta receção, descodificação e execução dos comandos, confirmando a fiabilidade da comunicação e a consistência do sistema de controlo motor.  
+
+Os resultados obtidos demonstram que a \gls{pcb} é plenamente capaz de controlar os motores do robô didático, assegurando a execução correta dos comandos recebidos via \gls{lora}. Esta validação inicial confirmou a funcionalidade essencial do sistema de controlo e comunicação, constituindo um passo determinante antes da integração no protótipo do \gls{usv}, ao garantir a compatibilidade entre o \emph{software} do robô didático \cite{didactic-robot-thesis} e o novo \emph{hardware}.  
+
 A validação final do sistema ocorreu no âmbito do exercício internacional \gls{repmus25}, considerado o maior exercício mundial de robótica marítima \cite{iddportugal-repmus, sapo-repmus}. O protótipo desenvolvido foi testado no subevento \gls{rex25}, organizado pela Escola Naval \cite{escolanaval-repmus}, que visa promover a experimentação tecnológica e a cooperação em cenários operacionais simulados, no contexto das operações não tripuladas.  
 
 Este teste constituiu um marco relevante na validação do sistema, uma vez que permitiu avaliar o desempenho do \gls{usv} em condições operacionais reais, incluindo a comunicação de longo alcance via \gls{lora} e a execução de rotas predefinidas com recurso ao \gls{gps} e ao \gls{imu}.  
@@ -45,7 +76,7 @@ A Figura~\ref{fig:html} apresenta uma captura de ecrã da aplicação desenvolvi
     \label{fig:html}
 \end{figure}
 
-A Figura \ref{fig:video-usv} contém um link para um video na plataforma YouTube, que demonstra o \gls{usv} a se movimentar.
+A Figura \ref{fig:video-usv} apresenta um \emph{link} para um vídeo na plataforma YouTube que documenta a execução prática do \gls{usv}. O registo em video demonstra tanto as capacidades de navegação autónoma entre \emph{waypoints} pré-definidos, como o funcionamento em modo manual através de comandos remotos.  
 
 \begin{figure}[H]
     \centering
@@ -57,9 +88,11 @@ A Figura \ref{fig:video-usv} contém um link para um video na plataforma YouTube
             \fill[white] (-0.25,0.35) -- (-0.25,-0.35) -- (0.4,0) -- cycle;
         \end{tikzpicture}%
     }
-    \caption{Demonstração do \gls{usv} em funcionamento automático e manual (clique na imagem para abrir o vídeo no YouTube).}
+    \caption[Demonstração do \gls{usv} em funcionamento automático e manual]{Demonstração do \gls{usv} em funcionamento automático e manual (clique na imagem para abrir o vídeo no YouTube).}
     \label{fig:video-usv}
 \end{figure}
+
+Até aproximadamente ao minuto 1:10, é possível observar o modo autónomo de navegação, no qual o \gls{usv} percorre de forma independente uma rota estabelecida a partir de coordenadas \gls{gps}. A partir desse ponto, é evidenciado o modo de controlo manual, em que a embarcação é dirigida em tempo real por instruções transmitidas a partir da estação de controlo. Esta demonstração confirma a versatilidade do sistema, assegurando a sua capacidade de alternar de forma fiável entre modos de operação autónomo e manual.  
 
 \section{Sumário}
 
