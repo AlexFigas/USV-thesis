@@ -3,8 +3,11 @@
 \chapter{Implementação}
 \label{ch:implementacao}
 
-Neste capítulo, a implementação é analisada em duas vertentes complementares.  
-Na primeira parte, dedicada ao \emph{hardware}, descreve-se a plataforma de desenvolvimento na Secção~\ref{sec:plataforma-desenvolvimento}, seguida da integração dos propulsores na Subsecção~\ref{subsec:integracao-propulsores}, da utilização dos sensores na Subsecção~\ref{subsec:sensores}, dos módulos de comunicação e, por fim, da conceção da \gls{pcb} na Subsecção~\ref{subsec:pcb}. Na segunda parte, referente ao \emph{software}, detalham-se a arquitetura modular do código na Subsecção~\ref{subsec:arquitetura-codigo}, os mecanismos de controlo de motores na Subsecção~\ref{subsec:controlo-de-motores}, a aquisição e processamento de dados dos sensores na Subsecção~\ref{subsec:processamento-sensores} e as estratégias de comunicação via \gls{lora} na Subsecção~\ref{subsec:comunicacao-lora}. Esta organização permite compreender de forma clara e sistemática como os diferentes componentes foram concebidos e integrados para dar origem ao sistema ciberfísico proposto.
+Neste capítulo é apresentada a implementação do sistema ciberfísico desenvolvido, abordando de forma integrada as suas componentes de \emph{hardware} e \emph{software}. Esta análise encontra-se organizada em quatro secções principais, permitindo compreender a forma como o sistema foi concebido, desenvolvido e validado.  
+
+Na Secção~\ref{sec:plataforma-desenvolvimento} descreve-se a plataforma de desenvolviment}, onde são analisadas as ferramentas e tecnologias utilizadas tanto a nível de microcontrolador como do ambiente de programação. A Secção~\ref{sec:implementacao-hardware} aborda a implementação de \emph{hardware}, apresentando a integração dos propulsores, sensores, módulos de comunicação e a conceção da \gls{pcb}. Na Secção~\ref{sec:implementacao-software} é detalhada a implementação de \emph{software}, incluindo a arquitetura modular, o controlo dos motores, o processamento de dados dos sensores e a comunicação via \gls{lora}. Por fim, a Secção~\ref{sec:implementacao-sumario} apresenta um sumário conclusivo, sintetizando os principais resultados e destacando as decisões de projeto que asseguram a robustez, escalabilidade e reprodutibilidade do sistema.  
+
+Esta organização permite uma leitura estruturada e progressiva, conduzindo o leitor do contexto geral de desenvolvimento até aos detalhes técnicos da implementação que materializam o sistema proposto.
 
 \section{Plataforma de Desenvolvimento}
 \label{sec:plataforma-desenvolvimento}
@@ -17,7 +20,7 @@ A plataforma de desenvolvimento utilizada neste trabalho constitui a base para a
 
 O microcontrolador \acrfull{esp32} é um sistema de elevado desempenho e reduzidas dimensões, dotado de um processador \emph{dual-core} com frequência até 240 MHz e suporte a vírgula flutuante. Esta capacidade de processamento é largamente superior às necessidades do presente projeto, garantindo margem para futuras expansões e algoritmos mais exigentes em termos de cálculo.  
 
-Para a implementação descrita nesta \gls{tfm} foi utilizado o módulo TTGO \gls{lora}32, representado na Figura \ref{fig:lora32}, que integra num único dispositivo o microcontrolador \gls{esp32}, um transceptor (transmite e recebe sinais) \gls{lora} e um \emph{display} \gls{oled} de 0.96 polegadas. Esta integração reduz significativamente a complexidade do \emph{\emph{hardware}}, uma vez que combina num só módulo os principais elementos de computação e comunicação necessários para o funcionamento do \gls{usv}.  
+Para a implementação descrita neste \gls{tfm} foi utilizado o módulo TTGO \gls{lora}32, representado na Figura \ref{fig:lora32}, que integra num único dispositivo o microcontrolador \gls{esp32}, um transceptor (transmite e recebe sinais) \gls{lora} e um \emph{display} \gls{oled} de 0.96 polegadas. Esta integração reduz significativamente a complexidade do \emph{hardware}, uma vez que combina num só módulo os principais elementos de computação e comunicação necessários para o funcionamento do \gls{usv}.  
 
 \begin{figure}[H]
     \centering
@@ -26,11 +29,11 @@ Para a implementação descrita nesta \gls{tfm} foi utilizado o módulo TTGO \gl
     \label{fig:lora32}
 \end{figure}
 
-Do ponto de vista das interfaces de comunicação, o \gls{esp32} suporta nativamente \gls{i2c}, \gls{uart} e \gls{spi}, além da geração de sinais \gls{pwm}, o que o torna adequado para aplicações de controlo de atuadores e aquisição de dados de sensores heterogéneos. O módulo disponibiliza também conectividade sem fios através de \gls{wifi} e \emph{bluetooth}, que, embora não tenham sido utilizados diretamente neste trabalho, representam uma mais-valia para cenários futuros, como a monitorização remota via redes locais ou a configuração simplificada de parâmetros através de dispositivos móveis.  
+Do ponto de vista das interfaces de comunicação, o \gls{esp32} suporta nativamente \gls{i2c}, \gls{uart} e \gls{spi}, além da geração de sinais \gls{pwm}, o que o torna adequado para aplicações de controlo de atuadores e aquisição de dados de sensores heterogéneos. O módulo disponibiliza também conectividade sem fios através de Wi-Fi e \emph{Bluetooth}, que, embora não tenham sido utilizados diretamente neste trabalho, representam uma mais-valia para cenários futuros, como a monitorização remota via redes locais ou a configuração simplificada de parâmetros através de dispositivos móveis.  
 
 O \emph{display} \gls{oled} incorporado revelou-se particularmente útil durante a fase de testes e validação, ao permitir monitorizar em tempo real o estado do sistema. Através dele foi possível confirmar a receção de dados provenientes de sensores, a correta execução de comandos de controlo e a integridade das mensagens trocadas via \gls{lora}. Este recurso facilitou o processo de \emph{debug} e reduziu a dependência de sistemas de monitorização externos, acelerando a fase de desenvolvimento.  
 
-Outro aspeto relevante é a vasta comunidade de suporte e o ecossistema de bibliotecas disponíveis para o \gls{esp32}, tanto no ambiente Arduino como em \emph{frameworks} mais avançadas, como a \gls{esp-idf}, que constitui a framework oficial de desenvolvimento disponibilizada pela Espressif programável em C. Esta característica contribui para uma maior fiabilidade no desenvolvimento, reduzindo riscos de integração e permitindo concentrar o esforço na implementação da arquitetura modular proposta para o \gls{usv}.
+Outro aspeto relevante é a vasta comunidade de suporte e o ecossistema de bibliotecas disponíveis para o \gls{esp32}, tanto no ambiente Arduino como em \emph{frameworks} mais avançadas, como a \gls{esp-idf}, que constitui a \emph{framework} oficial de desenvolvimento disponibilizada pela Espressif programável em C. Esta característica contribui para uma maior fiabilidade no desenvolvimento, reduzindo riscos de integração e permitindo concentrar o esforço na implementação da arquitetura modular proposta para o \gls{usv}.
 
 Em síntese, o módulo TTGO \gls{lora}32 constituiu uma plataforma robusta, versátil e de fácil integração, adequando-se não apenas às exigências do desenvolvimento deste protótipo de \gls{usv}, mas também oferecendo capacidade de evolução para cenários mais complexos, como a execução de algoritmos de navegação autónoma em tempo real ou a integração com sistemas de monitorização distribuídos.
 
@@ -45,7 +48,7 @@ Um exemplo claro destas funcionalidades pode ser observado no ficheiro de config
 
 Neste caso, a secção \texttt{[env:ttgo-lora32-v1]} especifica o ambiente de compilação direcionado para a placa TTGO \gls{lora}32, fixando a versão da plataforma \gls{esp32} (\texttt{espressif32@$\sim$5.0.0}) e o \emph{framework} (\texttt{arduino}). A diretiva \texttt{lib\_deps} lista todas as bibliotecas necessárias ao projeto, juntamente com a versão exata de cada uma. Assim, bibliotecas como \texttt{Adafruit SSD1306}, \texttt{LoRa} ou \texttt{TinyGPSPlus} são automaticamente descarregadas e mantidas consistentes em qualquer máquina de desenvolvimento, evitando problemas de incompatibilidade entre versões.  
 
-Este mecanismo garante que o projeto é reprodutível e portável, pois basta clonar o repositório e executar a compilação para obter um ambiente idêntico, sem necessidade de configurar manualmente as bibliotecas ou dependências.
+Este mecanismo garante que o projeto é reprodutível e portável, sendo apenas necessário clonar o repositório e executar a compilação para obter um ambiente idêntico, sem necessidade de configurar manualmente as bibliotecas ou dependências.
 
 No âmbito deste projeto, foi utilizada a \emph{framework} Arduino do PlatformIO, pela sua simplicidade e pela ampla disponibilidade de bibliotecas compatíveis com o \gls{esp32}. Alternativamente, o \gls{esp-idf} poderia ter sido utilizado, oferecendo maior controlo de baixo nível e otimizações de desempenho, mas a sua maior complexidade tornaria o ciclo de desenvolvimento menos ágil. Assim, a opção pelo ecossistema Arduino mostrou-se mais adequada à prototipagem rápida e à integração de múltiplos sensores e interfaces de comunicação.  
 
@@ -58,7 +61,7 @@ Em síntese, a combinação destas ferramentas permitiu estabelecer um ambiente 
 \section{Implementação de \emph{Hardware}}
 \label{sec:implementacao-hardware}
 
-A implementação do \emph{\emph{hardware}} do sistema desenvolvido nesta \gls{tfm} assenta numa arquitetura modular, representada de forma esquemática na Figura \ref{fig:placeholder}. Tal como no projeto realizado em \cite{didactic-robot-thesis}, procurou-se manter uma estrutura clara e escalável, onde cada componente desempenha um papel bem definido e comunica com a unidade central de forma eficiente.  
+A implementação do \emph{hardware} do sistema desenvolvido neste \gls{tfm} assenta numa arquitetura modular, representada de forma esquemática no Anexo \ref{anexo:pcb}. Tal como no projeto realizado em \cite{didactic-robot-thesis}, procurou-se manter uma estrutura clara e escalável, onde cada componente desempenha um papel bem definido e comunica com a unidade central de forma eficiente.  
 
 O núcleo do sistema é constituído pelo microcontrolador \gls{esp32}, responsável por coordenar a execução das tarefas de controlo, comunicação e aquisição de dados. Através do barramento \gls{i2c}, o \gls{esp32} comunica com um expansor, responsável pela distribuição dos sinais de controlo e pela interface com os diferentes periféricos \gls{pwm}. Este dispositivo disponibiliza 16 canais adicionais de saída a partir de apenas dois pinos de comunicação \gls{i2c} (SDA e SCL), sendo ainda possível encadear múltiplos expansores para aumentar o número de canais disponíveis. Esta solução permite ultrapassar a limitação do número de pinos físicos do microcontrolador, assegurando a escalabilidade do sistema e reduzindo simultaneamente a complexidade das interligações elétricas, o que simplifica a integração de novos módulos funcionais.
 
@@ -91,7 +94,7 @@ Para a determinação do \emph{yaw}, \emph{pitch} e \emph{roll} do \gls{usv}, fo
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.25\linewidth]{figuras/imu-icm.jpg}
-    \caption{\gls{imu} ICM-20948 utilizada no protótipo}
+    \caption{\gls{imu} ICM-20948 utilizado no protótipo e respetivo \emph{pinout}}
     \label{fig:imu}
 \end{figure}
 
@@ -99,7 +102,7 @@ A combinação destes sensores permite medir acelerações lineares, taxas de ro
 
 Em termos de integração física, o módulo \gls{imu} foi ligado ao microcontrolador \gls{esp32} através do barramento \gls{i2c}, utilizando os pinos SDA e SCL. No protótipo, foram atribuídos os pinos GPIO 21 (SDA) e GPIO 22 (SCL), respetivamente, recorrendo a uma frequência de comunicação de 400 kHz (\emph{I2C Fast Mode}). Esta interface garante uma comunicação fiável e de elevada velocidade, adequada para a leitura periódica dos dados dos nove eixos.
 
-O ICM-20948 suporta dois endereços \gls{i2c} distintos (0x68 e 0x69), selecionáveis via configuração de \emph{hardware}, o que possibilita a integração simultânea de múltiplos módulos no mesmo barramento, caso seja necessário. No presente projeto, foi utilizada a configuração por omissão (0x68).  
+O ICM-20948 suporta dois endereços \gls{i2c} distintos (0x68 e 0x69), configuráveis por \emph{hardware} através do pino \texttt{AD0}. Quando este pino é ligado ao nível lógico baixo (GND), o endereço atribuído ao dispositivo é 0x68. Caso seja ligado ao nível lógico alto (3.3~V), o endereço passa a ser 0x69. Esta funcionalidade permite integrar múltiplos módulos ICM-20948 no mesmo barramento \gls{i2c}, desde que cada um utilize um endereço distinto. No presente projeto, foi adotada a configuração por omissão, mantendo o pino \texttt{AD0} ligado a GND, resultando no endereço 0x68.
 
 A ligação elétrica do módulo foi realizada diretamente à linha regulada de 3.3~V fornecida pelo \gls{esp32}, estabelecendo-se também a referência comum de massa (GND). Esta configuração garante compatibilidade elétrica entre os dispositivos e elimina a necessidade de conversores de nível lógico, uma vez que tanto o \gls{esp32} como o ICM-20948 operam nativamente a 3.3~V.
 
@@ -130,7 +133,7 @@ Tal como o \gls{imu}, o módulo \gls{gps} foi instalado no interior da caixa est
 
 \subsection{Comunicação}
 
-A comunicação entre o \gls{usv} e a estação remota é assegurada pela tecnologia \acrfull{lora}, integrada no próprio \gls{esp32} TTGO \gls{lora}32, que incorpora o transceptor Semtech SX1276. Esta solução permitiu simplificar a arquitetura de \emph{\emph{hardware}}, eliminando a necessidade de módulos externos dedicados de rádio e garantindo ao mesmo tempo baixo consumo energético e elevada robustez em cenários de operação remota.  
+A comunicação entre o \gls{usv} e a estação remota é assegurada pela tecnologia \acrfull{lora}, integrada no próprio \gls{esp32} TTGO \gls{lora}32, que incorpora o transceptor Semtech SX1276. Esta solução permitiu simplificar a arquitetura de \emph{hardware}, eliminando a necessidade de módulos externos dedicados de rádio e garantindo ao mesmo tempo baixo consumo energético e elevada robustez em cenários de operação remota.  
 
 A configuração do transceptor \gls{lora} foi realizada de acordo com a regulamentação europeia, utilizando uma frequência de operação de 866 MHz. 
 
@@ -139,7 +142,7 @@ O sistema foi configurado para operar com um \emph{Spreading Factor} de 12, que 
 A comunicação pode ser utilizada para dois propósitos principais:  
 
 \begin{enumerate}
-    \item Comandos remotos, que foram implementados no âmbito deste trabalho, consistem na receção de instruções provenientes da estação remota. Estes comandos permitem tanto a atualização de rotas sob a forma de \emph{waypoints} como a navegação manual, através de ordens de movimento direto (avante e atrás), lateral (esquerda e direita) e paragem. A implementação destes comandos garante a possibilidade de alternar entre controlo autónomo e intervenção manual sempre que necessário.  
+    \item Comandos remotos, que foram implementados no âmbito deste trabalho, consistem na receção de instruções provenientes da estação remota. Estes comandos permitem tanto a atualização de rotas sob a forma de \emph{waypoints} como a navegação manual, através de ordens de movimento direto (frente e atrás), lateral (esquerda e direita) e paragem. A implementação destes comandos garante a possibilidade de alternar entre controlo autónomo e intervenção manual sempre que necessário.  
     \item Telemetria, que consiste no envio periódico de dados essenciais para a monitorização do sistema, incluindo posição \gls{gps}, orientação obtida pelo \gls{imu}, estado da bateria e modo de controlo ativo (manual ou automático). Esta funcionalidade não foi implementada na presente fase do trabalho, encontrando-se prevista para desenvolvimentos futuros.  
 \end{enumerate}
 
@@ -169,7 +172,7 @@ A Figura \ref{fig:pcb-esquematica-vs-real} ilustra a comparação entre a esquem
         \includegraphics[width=0.80\linewidth,angle=90]{figuras/pcb-real.png}
         \caption*{(B) Implementação real}
     \end{minipage}
-    \caption{Comparação entre a esquemática (A) e a implementação física (B) da \gls{pcb}}
+    \caption[Comparação entre o \emph{layout} e a implementação física da \gls{pcb}]{Comparação entre o \emph{layout} (A) e a implementação física (B) da \gls{pcb}}
     \label{fig:pcb-esquematica-vs-real}
 \end{figure}
 
@@ -187,13 +190,13 @@ Em suma, a integração de todos os módulos numa única \gls{pcb} permitiu não
 \section{Implementação de \emph{Software}}
 \label{sec:implementacao-software}
 
-A implementação de \emph{software} constituiu a camada lógica do sistema desenvolvido, responsável por coordenar a interação entre os diferentes módulos de \emph{\emph{hardware}}, assegurar o processamento em tempo real dos dados de sensores, gerir a comunicação sem fios e aplicar os algoritmos de navegação. Esta camada foi concebida de forma modular, permitindo que cada componente seja desenvolvido, testado e substituído de forma independente, sem comprometer a integridade do sistema global.  
+A implementação de \emph{software} constituiu a camada lógica do sistema desenvolvido, responsável por coordenar a interação entre os diferentes módulos de \emph{hardware}, assegurar o processamento em tempo real dos dados de sensores, gerir a comunicação sem fios e aplicar os algoritmos de navegação. Esta camada foi concebida de forma modular, permitindo que cada componente seja desenvolvido, testado e substituído de forma independente, sem comprometer a integridade do sistema global.  
 
 O código foi estruturado para garantir três requisitos principais: funcionamento não bloqueante, escalabilidade e reutilização. O primeiro requisito assegura que todas as tarefas críticas, como leitura de sensores, controlo dos motores e receção de comandos, são executadas sem interrupções prolongadas, preservando a responsividade do sistema. O segundo requisito garante que novos módulos ou algoritmos de controlo podem ser facilmente integrados, acompanhando a evolução do protótipo. O terceiro requisito promove a portabilidade do código para outros projetos semelhantes, mantendo a mesma filosofia modular que guiou a implementação do Robot Didático \cite{didactic-robot-thesis}.  
 
-Importa ainda destacar que todo o código desenvolvido no âmbito desta \gls{tfm} foi disponibilizado em regime de \emph{open source}, encontrando-se acessível num repositório público de controlo de versões na plataforma GitHub \cite{github-usv}. Esta decisão assegura não apenas a transparência e reprodutibilidade científica, mas também a possibilidade de reutilização, extensão e validação por parte de outros estudantes, investigadores, profissionais da área e qualquer curioso.
+Importa ainda destacar que todo o código desenvolvido no âmbito deste \gls{tfm} foi disponibilizado em regime de \emph{open source}, encontrando-se acessível num repositório público de controlo de versões na plataforma GitHub \cite{github-usv}. Esta decisão assegura não apenas a transparência e reprodutibilidade científica, mas também a possibilidade de reutilização, extensão e validação por parte de outros estudantes, investigadores, profissionais da área e qualquer curioso.
 
-Ao longo desta secção são descritos os principais aspetos da implementação de \emph{software}, incluindo a integração dos subsistemas no ciclo principal na Subsecção~\ref{sec:integracao}, a arquitetura modular do código na Subsecção~\ref{subsec:arquitetura-codigo}, o controlo dos motores na Subsecção~\ref{subsec:controlo-de-motores}, a leitura e processamento dos sensores na Subsecção~\ref{subsec:processamento-sensores} e a comunicação via \gls{lora} com mensagens estruturadas em \emph{Protobuf} na Subsecção~\ref{subsec:comunicacao-lora}. Estes elementos, em conjunto, constituem a base funcional que permite ao veículo operar de forma autónoma ou manual, com monitorização e controlo em tempo real.
+Ao longo desta secção são descritos os principais aspetos da implementação de \emph{software}, incluindo a integração dos subsistemas no ciclo principal na Subsecção~\ref{sec:integracao}, a arquitetura modular do código na Subsecção~\ref{subsec:arquitetura-codigo}, o controlo dos motores na Subsecção~\ref{subsec:controlo-de-motores}, a leitura e processamento dos sensores na Subsecção~\ref{subsec:processamento-sensores} e a comunicação via \gls{lora} com mensagens estruturadas em \texttt{Protobuf} na Subsecção~\ref{subsec:comunicacao-lora}. Estes elementos, em conjunto, constituem a base funcional que permite ao veículo operar de forma autónoma ou manual, com monitorização e controlo em tempo real.
 
 \subsection{Integração do Sistema}
 \label{sec:integracao}
@@ -208,7 +211,7 @@ A Listagem \ref{lst:main-usv-cpp} apresenta o código completo do ficheiro \text
 
 \lstinputlisting[caption=Estrutura principal do programa do \gls{usv}, label={lst:main-usv-cpp}, style=BetterCPP]{code/minimal/main_usv.cpp}
 
-É importante destacar que os dados provenientes do \gls{gps} e da \gls{imu} são processados de forma independente. A obtenção destas informações é realizada explicitamente através das chamadas aos métodos \texttt{getGPSData()} e \texttt{getIMUData()}, nas linhas 27 e 28 do código, respetivamente. Esta abordagem reflete uma decisão arquitetural relevante, pois garante que o objeto \texttt{USV} não está rigidamente acoplado a implementações específicas de sensores, mas antes a interfaces genéricas que fornecem dados estruturados de posicionamento e orientação.  
+É importante destacar que os dados provenientes do \gls{gps} e do \gls{imu} são processados de forma independente. A obtenção destas informações é realizada explicitamente através das chamadas aos métodos \texttt{getGPSData()} e \texttt{getIMUData()}, nas linhas 27 e 28 do código, respetivamente. Esta abordagem reflete uma decisão arquitetural relevante, pois garante que o objeto \texttt{USV} não está rigidamente acoplado a implementações específicas de sensores, mas antes a interfaces genéricas que fornecem dados estruturados de posicionamento e orientação.  
 
 Desta forma, a substituição ou atualização de sensores pode ser efetuada sem necessidade de alterar a lógica central do sistema, preservando a modularidade e a escalabilidade do \emph{software}. A profundidade desta estratégia de abstração e independência sensorial é analisada em maior detalhe na Subsecção~\ref{subsec:processamento-sensores}, onde se descrevem os mecanismos de aquisição e processamento de dados dos sensores.
 
@@ -225,9 +228,9 @@ Em síntese, a arquitetura de \emph{software} foi desenhada para ser modular, es
 \subsection{Arquitetura do Código}
 \label{subsec:arquitetura-codigo}
 
-A arquitetura de \emph{software} foi concebida de forma modular, seguindo princípios de encapsulamento e separação de responsabilidades. Cada componente do sistema foi implementado numa biblioteca própria, organizada em \emph{packages} correspondentes às suas funções principais, como propulsão, sensores, comunicação e controlo. Esta abordagem modular facilita a manutenção, promove a reutilização do código e assegura a escalabilidade do sistema, permitindo que novos sensores ou atuadores possam ser integrados com alterações mínimas à base existente.  
+A arquitetura de \emph{software} foi concebida de forma modular, seguindo princípios de encapsulamento e separação de responsabilidades. Cada componente do sistema foi implementado num módulo próprio, organizado em pacotes correspondentes às suas funções principais, como propulsão, sensores, comunicação e controlo. Esta abordagem modular facilita a manutenção, promove a reutilização do código e assegura a escalabilidade do sistema, permitindo que novos sensores ou atuadores possam ser integrados com alterações mínimas à base existente.  
 
-A Figura~\ref{fig:uml-simplificado} apresenta um diagrama \gls{uml} simplificado que ilustra a arquitetura do sistema e as interações entre as suas classes principais (para diagramas mais complexos ver Anexo \ref{anexo:diagramas-de-classes}). 
+A Figura~\ref{fig:uml-simplificado} apresenta o diagrama \gls{uml} simplificado que ilustra a arquitetura do sistema e as interações entre as suas classes principais (para diagramas mais completos ver Anexo \ref{anexo:diagramas-de-classes}). 
 
 \begin{figure}[H]
   \centering
@@ -244,9 +247,9 @@ O controlo da propulsão é implementado pela classe \texttt{MovementTwoThruster
 
 No que respeita aos sensores, foram criados pacotes independentes para \gls{gps} e \gls{imu}. A arquitetura foi desenhada de forma a desacoplar a lógica de aquisição de dados da lógica de utilização, permitindo que qualquer sensor capaz de preencher as estruturas \texttt{GPSData} ou \texttt{IMUData} seja integrado sem modificações na camada de aplicação. Esta característica garante flexibilidade na substituição de sensores e assegura a compatibilidade futura com diferentes modelos de \emph{hardware}.  
 
-A comunicação foi organizada no pacote \texttt{Communication}. A classe \texttt{LoRaDuplex} encapsula a interface direta com o transceptor \gls{lora} integrado no TTGO \gls{lora}32, implementando a lógica de envio e receção de pacotes em formato texto ou binário. Por cima desta camada foi desenvolvida a classe \texttt{LoRaProto}, responsável pela serialização e desserialização de mensagens com recurso a \emph{Protobuf} \cite{google-protobuf}. A utilização de \emph{Protobuf} permite definir de forma clara e estruturada os formatos de mensagem, ao mesmo tempo que reduz significativamente o tamanho dos pacotes transmitidos. Por exemplo, uma mensagem \texttt{StateMessage} representada em formato textual ocupa 33 bytes, enquanto a mesma mensagem em formato binário ocupa apenas 6 bytes, como ilustrado na Listagem~\ref{lst:comp}.
+A comunicação foi organizada no pacote \texttt{Communication}. A classe \texttt{LoRaDuplex} encapsula a interface direta com o transceptor \gls{lora} integrado no TTGO \gls{lora}32, implementando a lógica de envio e receção de pacotes em formato texto ou binário. Por cima desta camada foi desenvolvida a classe \texttt{LoRaProto}, responsável pela serialização e desserialização de mensagens com recurso a \texttt{Protobuf} \cite{google-protobuf}. A utilização de \texttt{Protobuf} permite definir de forma clara e estruturada os formatos de mensagem, ao mesmo tempo que reduz significativamente o tamanho dos pacotes transmitidos. Por exemplo, uma mensagem \texttt{StateMessage} representada em formato textual ocupa 33 bytes, enquanto a mesma mensagem em formato binário ocupa apenas 6 bytes, como ilustrado na Listagem~\ref{lst:comp}.
 
-\begin{lstlisting}[style={BetterCPP},caption={Comparação entre representação textual e binária com \emph{Protobuf}},label={lst:comp}]
+\begin{lstlisting}[style={BetterCPP},caption={Comparação entre representação textual e binária com \texttt{Protobuf}},label={lst:comp}]
 -- String (JSON-like):
 {"state":"MANUAL","manual":"FORWARD"}
 Tamanho: 33 bytes
@@ -256,7 +259,7 @@ Tamanho: 33 bytes
 Tamanho: 6 bytes
 \end{lstlisting}
 
-Em comunicações \gls{lora}, uma métrica crítica é o tempo no ar (\acrfull{toa}), que corresponde à duração de transmissão de um pacote. O \gls{toa} depende do tamanho da mensagem ($N_{\text{payload}}$), do fator de espalhamento (SF), da largura de banda (BW) e do código de correção de erros (CR). O cálculo é realizado em três etapas principais.  
+Em comunicações \gls{lora}, uma métrica crítica é o tempo no ar (\gls{toa}), que corresponde à duração de transmissão de um pacote. O \gls{toa} depende do tamanho da mensagem ($N_{\text{payload}}$), do fator de espalhamento (SF), da largura de banda (BW) e do código de correção de erros (CR). O cálculo é realizado em três etapas principais.  
 
 Primeiro, calcula-se a duração de um símbolo ($T_{\text{sym}}$), que depende diretamente do fator de espalhamento e da largura de banda:
 
@@ -274,7 +277,14 @@ N_{\text{payload}} = 8 + \max \left( \left\lceil \frac{8 \cdot PL - 4 \cdot SF +
 \label{eq:toa2}
 \end{equation}
 
-Na Equação~\ref{eq:toa2}, $PL$ representa o tamanho da carga útil (em bytes), $CRC$ indica se o mecanismo de verificação de erros está ativo, $H$ distingue entre cabeçalho implícito ou explícito e $DE$ refere-se à otimização para baixas taxas de dados. Este cálculo permite estimar quantos símbolos adicionais são necessários, para além da pré-codificação e redundância.  
+Na Equação~\ref{eq:toa2}, $PL$ representa o tamanho da carga útil (em bytes), $CRC$ indica se o mecanismo de verificação de erros (\gls{crc}) está ativo, $H$ distingue entre cabeçalho explícito ou implícito, e $DE$ refere-se à otimização para baixas taxas de dados (\emph{Low Data Rate Optimization}).  
+
+O parâmetro $H$ define o modo de cabeçalho utilizado na transmissão LoRa.  
+No modo \textbf{explícito} ($H = 0$), o pacote inclui um cabeçalho que contém informações sobre o comprimento da carga útil, a taxa de codificação (\emph{Coding Rate}) e a ativação do \gls{crc}. Este modo é mais flexível e amplamente utilizado, pois permite ao recetor interpretar dinamicamente os parâmetros de cada pacote recebido, sendo ideal para sistemas onde os pacotes podem ter tamanhos ou configurações distintas.  
+
+Por outro lado, no modo \textbf{implícito} ($H = 1$), o cabeçalho é omitido, reduzindo ligeiramente o tamanho e o tempo total de transmissão do pacote. Contudo, este modo requer que o recetor conheça previamente todos os parâmetros de configuração da transmissão (comprimento da carga útil, taxa de codificação e presença do \gls{crc}), uma vez que essas informações não são incluídas no próprio pacote.  
+
+Em resumo, o modo explícito oferece maior robustez e compatibilidade, enquanto o modo implícito privilegia a eficiência temporal e é mais adequado para sistemas com configuração fixa e comunicação previamente acordada entre emissor e recetor.
 
 Finalmente, obtém-se o tempo total de transmissão de um pacote ($T_{\text{packet}}$), somando a duração do preâmbulo ao número de símbolos da carga útil:
 
@@ -285,7 +295,7 @@ T_{\text{packet}} = \left( N_{\text{preamble}} + 4.25 + N_{\text{payload}} \righ
 
 Na Equação~\ref{eq:toa3}, $N_{\text{preamble}}$ corresponde ao número de símbolos de sincronização enviados no início de cada transmissão, enquanto o fator $4.25$ resulta de um ajuste especificado pelo protocolo \gls{lora} \cite{ttn-lora-phy-format}. Multiplicando pela duração de cada símbolo, obtém-se o tempo efetivo que o pacote permanece no ar.  
 
-Aplicando estas fórmulas ao exemplo descrito, com SF12, BW de 125 kHz e CR = 4/5, a transmissão de uma mensagem de 33 bytes apresenta um \gls{toa} aproximado de $1.81$ segundos. Já para uma mensagem de apenas 6 bytes, o valor reduz-se para $0.99$ segundos. Esta redução de aproximadamente 45\% traduz-se numa menor probabilidade de colisões, numa diminuição da taxa de erro de pacotes e num consumo energético inferior.  
+Aplicando estas fórmulas ao exemplo descrito, com SF12, BW de 125 kHz e CR = 4/5, a transmissão de um pacote de 33 bytes apresenta um \gls{toa} aproximado de $1.81$ segundos. Já para um pacote de apenas 6 bytes, o valor reduz-se para $0.99$ segundos. Esta redução de aproximadamente 45\% traduz-se numa menor probabilidade de colisões, numa diminuição da taxa de erro de pacotes e num consumo energético inferior.  
 
 Assim, ainda que o alcance teórico permaneça constante (pois depende apenas de SF, BW e CR), o alcance efetivo em cenários práticos é superior para mensagens mais curtas. Isto deve-se ao facto de pacotes mais compactos reduzirem a probabilidade de erros acumulados, a taxa de colisões e o tempo de ocupação do canal, contribuindo para uma comunicação mais robusta e eficiente.
 
@@ -297,13 +307,16 @@ A Listagem~\ref{lst:control} apresenta a implementação da lógica de controlo 
 
 \lstinputlisting[caption={Excerto da classe \texttt{Control} demonstrando a lógica automática de controlo},label={lst:control},style=BetterCPP]{code/minimal/control.cpp}
 
-O método \texttt{control()} inicia verificando o estado atual do sistema. Quando este se encontra em modo automático, o \gls{led} correspondente é ativado e o \gls{led} manual é desligado, fornecendo assim um \emph{feedback} visual imediato ao operador. De forma análoga, quando o modo manual é selecionado, o \gls{led} manual é ligado e o \gls{led} automático é desligado. Esta alternância simples assegura que o estado de operação do veículo é sempre claramente indicado.  
+O método \texttt{control()} (linhas 1-25) inicia verificando o estado atual do sistema. Quando este se encontra em modo automático (linhas 3-13), o \gls{led} correspondente é ativado e o \gls{led} manual é desligado, fornecendo assim um \emph{feedback} visual imediato ao operador. De forma análoga, quando o modo manual é selecionado (linhas 14-34), o \gls{led} manual é ligado e o \gls{led} automático é desligado. Esta alternância simples assegura que o estado de operação do veículo é sempre claramente indicado.  
 
-No modo automático, o método \texttt{automaticControl()} verifica se todos os \emph{waypoints} definidos foram percorridos. Caso isso ocorra, o \gls{led} automático entra em modo intermitente e o movimento é interrompido, sinalizando o fim da missão. Caso contrário, é chamado o método \texttt{setCourse()}, que recebe como parâmetro o erro de rumo acumulado (\texttt{lastBearingError}) e executa a correção necessária.  
+No modo automático, o método \texttt{automaticControl()} (linhas 27-36) verifica se todos os \emph{waypoints} definidos foram percorridos. Caso isso ocorra, o \gls{led} automático entra em modo intermitente (linha 31) e o movimento é interrompido (linha 32), sinalizando o fim da missão. Caso contrário, é chamado o método \texttt{setCourse()} (linha 35), que recebe como parâmetro o erro de rumo acumulado (\texttt{lastBearingError}) e executa a correção necessária.  
 
-A lógica implementada em \texttt{setCourse()} baseia-se diretamente no sinal desse erro: valores positivos correspondem a desvios que requerem uma correção para a direita, valores negativos exigem correções para a esquerda e, no caso de o erro ser nulo, o movimento é interrompido com a chamada a \texttt{movement.stop()}. Trata-se, portanto, de um controlador simples do tipo \emph{on/off}, que se revelou eficaz para o seguimento de trajetórias definidas por \emph{waypoints}. Apesar de básico, este mecanismo é suficiente para o protótipo descrito nesta \gls{tfm}, mantendo no entanto a possibilidade de evolução para controladores mais sofisticados, como \gls{pid} ou \gls{lqr}, graças à natureza modular do código.  
+A lógica implementada em \texttt{setCourse()} (linhas 38-52) baseia-se diretamente no sinal desse erro. Valores positivos correspondem a desvios que requerem uma correção para a direita (linhas 40-43), enquanto valores negativos exigem correções para a esquerda (linhas 44-47). Quando o erro é nulo (linhas 48-51), o movimento está exatamente alinhado logo movimenta-se apenas para a frente com a chamada a \texttt{movement.front()}. Trata-se, portanto, de um controlador simples do tipo \emph{on/off}, que se revelou eficaz para o seguimento de trajetórias definidas por \emph{waypoints}.  
+
+Apesar de simples, este método revelou-se suficiente para o protótipo descrito neste \gls{tfm}, assegurando um comportamento previsível e estável em todas as fases de teste. A arquitetura modular permite ainda a substituição futura desta lógica por controladores mais avançados, como \acrfull{pid} ou \acrfull{lqr}, sem impacto significativo no restante sistema.  
 
 Em síntese, a arquitetura de \emph{software} concebida garante robustez, clareza e expansibilidade, constituindo uma base sólida não apenas para o funcionamento do protótipo, mas também para evoluções futuras em sistemas mais complexos.
+
 
 \subsection{Controlo dos Motores}
 \label{subsec:controlo-de-motores}
@@ -323,7 +336,7 @@ em que \(t_{pulse}\) representa a largura de pulso em microssegundos, \(N_{ticks
 
 A Listagem~\ref{lst:thruster-cpp} apresenta parte da implementação da classe \texttt{Thruster}, ilustrando a lógica de mapeamento dos sinais \gls{pwm} para cada direção de rotação.  
 
-\lstinputlisting[caption=Parte da classe \texttt{Thruster}, label={lst:thruster-cpp}, style=BetterCPP]{code/minimal/thruster.cpp}
+\lstinputlisting[caption=Métodos \texttt{setDirection()} e \texttt{pulseToTicks()} da classe \texttt{Thruster}, label={lst:thruster-cpp}, style=BetterCPP]{code/minimal/thruster.cpp}
 
 Na função \texttt{pulseToTicks()}, o parâmetro \texttt{PWM\_FREQ} corresponde à frequência do sinal \gls{pwm} (\(f_{PWM}\)), expressa em hertz.  O fator \(10^6\) é utilizado para converter a frequência em período (em microssegundos), dado que \(1 \, s = 10^6 \, \mu s\). Desta forma, o denominador da Equação~\ref{eq:pulsetoticks} (\(10^6/f_{PWM}\)) representa o período de um ciclo \gls{pwm}, assegurando a coerência entre a formulação matemática e a implementação em código.
 
@@ -338,20 +351,20 @@ Esta implementação retoma e generaliza a lógica desenvolvida no projeto do Ro
 
 A leitura e processamento dos sensores foi implementada de forma modular e não bloqueante, garantindo que o \texttt{loop()} principal do sistema permanece responsivo mesmo em cenários de elevada carga de processamento. Cada sensor possui uma classe dedicada responsável pela aquisição e atualização periódica dos dados, mantendo internamente uma estrutura de estado que pode ser acedida a qualquer momento pelo restante sistema. Assim, a cada iteração do ciclo principal, a última leitura válida encontra-se disponível sem necessidade de esperar por novas medições.
 
-No caso do \gls{imu}, a classe \texttt{IMU\_ICM\_20948} realiza leituras periódicas do acelerómetro, giroscópio e magnetómetro integrados no chip ICM-20948, armazenando os valores em objetos do tipo \texttt{IMUData}. Esta classe integra também o algoritmo de fusão de sensores de Madgwick, responsável por combinar as medições dos diferentes sensores para fornecer estimativas robustas dos ângulos de \emph{yaw}, \emph{pitch} e \emph{roll}. A utilização deste filtro garante maior estabilidade e precisão, reduzindo a acumulação de erros proveniente do giroscópio e compensando variações transitórias. O resultado é um vetor de orientação continuamente atualizado, acessível através do método \texttt{getIMUData()}.
+No caso do \gls{imu}, a classe \texttt{IMU\_ICM\_20948} realiza leituras periódicas do acelerómetro, giroscópio e magnetómetro integrados no chip ICM-20948, armazenando os valores em objetos do tipo \texttt{IMUData}. Esta classe integra também o algoritmo de fusão de sensores de Madgwick \cite{madgwick-filter}, responsável por combinar as medições dos diferentes sensores para fornecer estimativas robustas dos ângulos de \emph{yaw}, \emph{pitch} e \emph{roll}. A utilização deste filtro garante maior estabilidade e precisão, reduzindo a acumulação de erros proveniente do giroscópio e compensando variações transitórias. O resultado é um vetor de orientação continuamente atualizado, acessível através do método \texttt{getIMUData()}.
 
 Já para o \gls{gps}, a classe \texttt{GPS\_BN880} é responsável por gerir a comunicação via interface \gls{i2c}-\gls{uart} com o recetor BN-880. As mensagens \gls{nmea} recebidas são descodificadas em tempo real utilizando a biblioteca \texttt{TinyGPSPlus} \cite{tinygpsplus}, sendo posteriormente armazenadas numa estrutura \texttt{GPSData}. Esta estrutura disponibiliza informações completas como latitude, longitude, velocidade, direção e número de satélites em uso, bem como indicadores de qualidade do sinal. Tal como no caso do \gls{imu}, o acesso a estes dados é realizado de forma assíncrona através do método \texttt{getGPSData()}, garantindo que o programa principal pode obter a posição mais recente sem necessidade de reexecutar o processo de descodificação. 
 
-Como previamente referido na Subsecção \ref{subsec:sensores}, esta abordagem, baseada em estruturas de dados desacopladas da implementação específica do sensor, permite substituir ou adicionar novos módulos de forma transparente. Por exemplo, a utilização futura de um recetor GNSS multiconstelação ou de umo \gls{imu} com maior precisão poderá ser facilmente incorporada sem modificações no código que consome os dados, uma vez que a interface pública das classes \texttt{GPSData} e \texttt{IMUData} permanecerá inalterada.
+Como previamente referido na Subsecção \ref{subsec:sensores}, esta abordagem, baseada em estruturas de dados desacopladas da implementação específica do sensor, permite substituir ou adicionar novos módulos de forma transparente. Por exemplo, a utilização futura de um recetor GNSS multiconstelação ou de um \gls{imu} com maior precisão poderá ser facilmente incorporada sem modificações no código que consome os dados, uma vez que a interface pública das classes \texttt{GPSData} e \texttt{IMUData} permanecerá inalterada.
 
-\subsection{Comunicação LoRa}
+\subsection{Comunicação \acrfull{lora}}
 \label{subsec:comunicacao-lora}
 
-O envio de dados é realizado através dos métodos \texttt{sendPacket()}, disponíveis em duas versões: uma para mensagens do tipo \texttt{String} e outra para blocos de dados binários (\texttt{uint8\_t*}). A receção de pacotes segue o mesmo princípio, podendo ser feita como texto simples ou diretamente em \emph{buffer} binário, permitindo flexibilidade no tratamento de mensagens estruturadas. Para garantir compatibilidade e reduzir ambiguidades, as mensagens foram estruturadas utilizando \emph{Protocol Buffers} (\emph{Protobuf}), definidos previamente em ficheiros \texttt{.proto}.  
+O envio de dados é realizado através dos métodos \texttt{sendPacket()}, disponíveis em duas versões: uma para mensagens do tipo \texttt{String} e outra para blocos de dados binários (\texttt{uint8\_t*}). A receção de pacotes segue o mesmo princípio, podendo ser feita como texto simples ou diretamente em \emph{buffer} binário, permitindo flexibilidade no tratamento de mensagens estruturadas. Para garantir compatibilidade e reduzir ambiguidades, as mensagens foram estruturadas utilizando \emph{Protocol Buffers} (\texttt{Protobuf}), definidos previamente em ficheiros \texttt{.proto}.  
 
-O \emph{Protobuf} consiste num método de serialização binária altamente eficiente, desenvolvido pela Google, que permite representar estruturas de dados complexas em mensagens compactas e de fácil interpretação. Neste projeto, definiu-se no ficheiro \texttt{USV.proto} as mensagens \texttt{StateMessage} e \texttt{WaypointsMessage}. A primeira descreve o estado atual do sistema, incluindo o modo de controlo (manual ou automático) e, no caso manual, o comando em execução (frente, trás, esquerda, direita ou paragem). A segunda define listas de \emph{waypoints}, representados por pares latitude/longitude, que podem ser transmitidos a partir de uma estação remota para atualizar rotas.  
+O \texttt{Protobuf} \cite{google-protobuf} consiste num método de serialização binária altamente eficiente, desenvolvido pela Google, que permite representar estruturas de dados complexas em mensagens compactas e de fácil interpretação. Neste projeto, definiu-se no ficheiro \texttt{USV.proto} as mensagens \texttt{StateMessage} e \texttt{WaypointsMessage}. A primeira descreve o estado atual do sistema, incluindo o modo de controlo (manual ou automático) e, no caso manual, o comando em execução (frente, trás, esquerda, direita ou paragem). A segunda define listas de \emph{waypoints}, representados por pares latitude/longitude, que podem ser transmitidos a partir de uma estação remota para atualizar rotas.  
 
-O principal benefício da utilização de \emph{Protobuf} reside na sua eficiência: para além da redução no tamanho das mensagens, já apresentada na Secção~\ref{subsec:arquitetura-codigo}, a serialização binária permite reduzir o tempo de transmissão (\gls{toa}) e, consequentemente, o consumo energético do sistema. Além disso, a definição explícita do formato das mensagens assegura compatibilidade entre diferentes versões do \emph{software} e facilita a integração futura com outras plataformas de controlo ou monitorização.  
+O principal benefício da utilização de \texttt{Protobuf} reside na sua eficiência: para além da redução no tamanho das mensagens, já apresentada na Secção~\ref{subsec:arquitetura-codigo}, a serialização binária permite reduzir o tempo de transmissão (\gls{toa}) e, consequentemente, o consumo energético do sistema. Além disso, a definição explícita do formato das mensagens assegura compatibilidade entre diferentes versões do \emph{software} e facilita a integração futura com outras plataformas de controlo ou monitorização.  
 
 Durante a fase de testes, verificou-se a correta inicialização do transceptor e a integridade dos pacotes transmitidos e recebidos. Foram validados contadores internos de envio e receção, disponíveis na classe \texttt{LoRaDuplex}, que permitem avaliar de forma contínua o desempenho da comunicação. Os ensaios confirmaram a estabilidade em cenários de linha de vista, assegurando que o sistema mantém comunicação fiável em condições típicas de operação em ambiente marítimo.  
 
@@ -360,11 +373,11 @@ Em síntese, a integração da comunicação LoRa no TTGO \gls{lora}32, em conju
 \section{Sumário}
 \label{sec:implementacao-sumario}
 
-A implementação do sistema ciberfísico descrito neste capítulo seguiu uma abordagem modular, tanto ao nível do \emph{hardware} como do \emph{\emph{software}}. No que respeita ao \emph{\emph{hardware}}, foi realizada a integração progressiva dos propulsores, sensores, módulos de comunicação e gestão de energia numa \gls{pcb} dedicada, assegurando fiabilidade, simplicidade de montagem e escalabilidade futura.  
+A implementação do sistema ciberfísico descrito neste capítulo seguiu uma abordagem modular, tanto ao nível do \emph{hardware} como do \emph{software}. No que respeita ao \emph{hardware}, foi realizada a integração progressiva dos propulsores, sensores, módulos de comunicação e gestão de energia numa \gls{pcb} dedicada, assegurando fiabilidade, simplicidade de montagem e escalabilidade futura.  
 
-Ao nível do \emph{\emph{software}}, a arquitetura foi organizada em pacotes independentes, promovendo o encapsulamento de funcionalidades e a reutilização de código. Foram desenvolvidas bibliotecas próprias para o controlo dos motores, aquisição e processamento de dados de sensores, comunicação sem fios via LoRa e navegação autónoma baseada em \emph{waypoints}. Esta modularidade garante não só a clareza e robustez do sistema, mas também a sua capacidade de evolução, permitindo a integração de novos sensores, algoritmos de controlo mais avançados ou protocolos de comunicação alternativos.  
+Ao nível do \emph{software}, a arquitetura foi organizada em pacotes independentes, promovendo o encapsulamento de funcionalidades e a reutilização de código. Foram desenvolvidos módulos próprios para o controlo dos motores, aquisição e processamento de dados de sensores, comunicação sem fios via LoRa e navegação autónoma baseada em \emph{waypoints}. Esta modularidade garante não só a clareza e robustez do sistema, mas também a sua capacidade de evolução, permitindo a integração de novos sensores, algoritmos de controlo mais avançados ou protocolos de comunicação alternativos.  
 
-A utilização de técnicas de programação não bloqueantes assegurou a execução fluida do ciclo principal, conciliando a leitura de sensores, o envio de telemetria, a receção de comandos e o controlo dos propulsores em tempo real. A adoção de \emph{Protobuf} para a serialização das mensagens reforçou a eficiência da comunicação, reduzindo o tempo de transmissão e o consumo energético.  
+A utilização de técnicas de programação não bloqueantes assegurou a execução fluida do ciclo principal, conciliando a leitura de sensores, o envio de telemetria, a receção de comandos e o controlo dos propulsores em tempo real. A adoção de \texttt{Protobuf} para a serialização das mensagens reforçou a eficiência da comunicação, reduzindo o tempo de transmissão e o consumo energético.  
 
 Em síntese, a implementação resultou num sistema funcional, robusto e escalável, capaz de realizar navegação autónoma com telemetria em tempo real, representando uma base sólida para futuras iterações e aplicações em cenários reais de veículos de superfície não tripulados.
 

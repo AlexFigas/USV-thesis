@@ -19,7 +19,7 @@ Estes ensaios confirmaram o funcionamento básico de todos os módulos de forma 
 
 Após a validação individual de cada componente, procedeu-se à integração progressiva do sistema. Inicialmente, os propulsores foram testados em conjunto, verificando a coerência do movimento diferencial e a execução de manobras básicas (frente, trás e rotações). Posteriormente, o \gls{imu} e o \gls{gps} foram integrados com o sistema de controlo, validando a fusão de dados de orientação e navegação com a lógica de \emph{waypoints}.  
 
-Em paralelo, a comunicação \gls{lora} foi testada para garantir a transmissão de telemetria e a receção de comandos remotos, sem comprometer o funcionamento do ciclo principal. A utilização de mensagens estruturadas com \emph{Protobuf} demonstrou vantagens significativas na redução do tempo de transmissão e na fiabilidade da comunicação.  
+Em paralelo, a comunicação \gls{lora} foi testada para garantir a transmissão de telemetria e a receção de comandos remotos, sem comprometer o funcionamento do ciclo principal. A utilização de mensagens estruturadas com \texttt{Protobuf} demonstrou vantagens significativas na redução do tempo de transmissão e na fiabilidade da comunicação.  
 
 Todos os ensaios desta fase foram realizados em ambiente controlado de laboratório, permitindo afinar parâmetros de \emph{software} e validar a robustez da implementação antes da realização de testes em condições reais.  
 
@@ -32,7 +32,7 @@ A Figura \ref{fig:robot-didatico-comparacao} apresenta uma comparação entre o 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.5\linewidth]{figuras/robot-1-2.jpg}
-    \caption{Comparação entre o robô didático original (esquerda) e a versão equipada com a \gls{pcb} desenvolvida (direita).}
+    \caption[Comparação entre o robô didático original e a versão equipada com a \gls{pcb} desenvolvida.]{Comparação entre o robô didático original (esquerda) e a versão equipada com a \gls{pcb} desenvolvida (direita).}
     \label{fig:robot-didatico-comparacao}
 \end{figure}
 
@@ -56,11 +56,11 @@ Durante o ensaio foram enviados comandos em intervalos regulares de 10 segundos,
 
 Os resultados obtidos demonstram que a \gls{pcb} é plenamente capaz de controlar os motores do robô didático, assegurando a execução correta dos comandos recebidos via \gls{lora}. Esta validação inicial confirmou a funcionalidade essencial do sistema de controlo e comunicação, constituindo um passo determinante antes da integração no protótipo do \gls{usv}, ao garantir a compatibilidade entre o \emph{software} do robô didático \cite{didactic-robot-thesis} e o novo \emph{hardware}.  
 
-A validação final do sistema ocorreu no âmbito do exercício internacional \gls{repmus25}, considerado o maior exercício mundial de robótica marítima \cite{iddportugal-repmus, sapo-repmus}. O protótipo desenvolvido foi testado no subevento \gls{rex25}, organizado pela Escola Naval \cite{escolanaval-repmus}, que visa promover a experimentação tecnológica e a cooperação em cenários operacionais simulados, no contexto das operações não tripuladas.  
+A validação final do sistema ocorreu no âmbito do exercício internacional \gls{repmus25}, considerado o maior exercício mundial de robótica marítima \cite{iddportugal-repmus, isel-repmus, enidh-repmus, sapo-repmus}. O protótipo desenvolvido foi testado no subevento \gls{rex25}, organizado pela Escola Naval \cite{escolanaval-repmus}, que visa promover a experimentação tecnológica e a cooperação em cenários operacionais simulados, no contexto das operações não tripuladas. 
 
 Este teste constituiu um marco relevante na validação do sistema, uma vez que permitiu avaliar o desempenho do \gls{usv} em condições operacionais reais, incluindo a comunicação de longo alcance via \gls{lora} e a execução de rotas predefinidas com recurso ao \gls{gps} e ao \gls{imu}.  
 
-A participação no \gls{rex25}, integrado no \gls{repmus25}, demonstrou a aplicabilidade prática da solução desenvolvida e reforçou o contributo da Escola Náutica e da investigação nacional no domínio dos sistemas ciberfísicos aplicados à robótica marítima. Esta validação permitiu comprovar a robustez, escalabilidade e relevância prática do sistema, consolidando o trabalho desenvolvido no âmbito desta \gls{tfm}.
+A participação no \gls{rex25}, integrado no \gls{repmus25}, demonstrou a aplicabilidade prática da solução desenvolvida e reforçou o contributo da Escola Náutica e da investigação nacional no domínio dos sistemas ciberfísicos aplicados à robótica marítima. Esta validação permitiu comprovar a robustez, escalabilidade e relevância prática do sistema, consolidando o trabalho desenvolvido no âmbito deste \gls{tfm}.
 
 Durante o processo de validação identificou-se a necessidade de complementar os testes com uma ferramenta de apoio à visualização geográfica dos \emph{waypoints}, de forma a avaliar em tempo real a coerência e a precisão das rotas definidas. Para tal, foi desenvolvida uma aplicação em \gls{html} que, recorrendo a um servidor de \emph{map tiling}, permite representar graficamente a posição geográfica de cada \emph{waypoint} no globo. Esta ferramenta revelou-se essencial para a interpretação e validação prática das trajetórias, uma vez que forneceu uma perspetiva espacial clara do percurso programado e da sua correspondência com o ambiente real.  
 

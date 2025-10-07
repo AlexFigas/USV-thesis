@@ -1,16 +1,40 @@
 \chapter{Conclusões e Trabalho Futuro}
 \label{ch:conclusoesTrabalhoFuturo}
 
-O trabalho desenvolvido permitiu conceber e validar um sistema ciberfísico modular para o controlo autónomo de embarcações do tipo \gls{usv}. O protótipo integrou propulsores \emph{brushless}, sensores de navegação (\gls{gps} e \gls{imu}), comunicação de longo alcance via \gls{lora}, bem como uma arquitetura de \emph{software} estruturada em módulos reutilizáveis. Os resultados obtidos demonstraram a viabilidade da solução em cenários reais, confirmando a robustez, a escalabilidade e o potencial de evolução do sistema.
+Nesta secção são apresentadas as conclusões do trabalho desenvolvido, bem como as linhas de evolução identificadas para o futuro. A Secção~\ref{sec:conclusoes} sumariza os principais resultados alcançados, destacando a relevância e o impacto do sistema proposto. A Secção~\ref{sec:trabalho-futuro} descreve as perspetivas de evolução do projeto, apontando para áreas de melhoria e novas funcionalidades que poderão ser exploradas em trabalhos futuros.
 
-Conclui-se que a abordagem proposta constitui uma base sólida para futuras investigações e aplicações práticas no domínio da robótica marítima com recurso a veículos de superfície não tripulados. O sistema desenvolvido provou ser capaz de operar em modo manual e automático e seguir rotas definidas por \emph{waypoints} \gls{gps}, representando um contributo relevante para a área.
+\section{Conclusões}
+\label{sec:conclusoes}
 
-No que respeita ao trabalho futuro, identificam-se várias direções de evolução. Em primeiro lugar, destaca-se a possibilidade de integração do sistema no \gls{usv}-enautica1 da Escola Superior Náutica Infante D. Henrique, permitindo validar o desempenho em cenários de maior escala. Outra vertente importante consiste na implementação de um sistema de controlo remoto manual, quer através de um comando dedicado semelhante aos utilizados em rádio controlo, quer por meio da integração com o comando desenvolvido em \cite{catamara-telecomandado}, assegurando assim a compatibilidade com plataformas operacionais. 
+O trabalho desenvolvido permitiu conceber e validar um sistema ciberfísico modular para o controlo autónomo de embarcações do tipo \gls{usv}. O protótipo integrou propulsores \emph{brushless}, sensores de navegação (\gls{gps} e \gls{imu}), comunicação de longo alcance via \gls{lora}, bem como uma arquitetura de \emph{software} estruturada em módulos reutilizáveis.  
 
-A expansão para guardar telemetria num cartão SD constitui igualmente um caminho relevante. Do ponto de vista do controlo, será pertinente implementar e avaliar estratégias mais avançadas, nomeadamente controladores \gls{pid}, \gls{lqr}, de controlo ótimo ou até técnicas baseadas em aprendizagem por reforço, de modo a aumentar a precisão e a robustez da navegação.
+A \gls{pcb} desenvolvida foi testada inicialmente num robô didático, comprovando a compatibilidade com o software existente e assegurando o correto funcionamento dos módulos de controlo e comunicação antes da sua integração no protótipo do \gls{usv}.  
 
-Outra linha de evolução consiste na exploração da navegação cooperativa com múltiplos \gls{usv}, o que implica a coordenação distribuída entre embarcações através de \gls{lora} ou tecnologias alternativas de comunicação em rede. Neste mesmo sentido, a integração de sensores adicionais, como GNSS multiconstelação, câmaras ou radar de baixo custo, permitirá reforçar a precisão da navegação e a resiliência do sistema em ambientes mais complexos.
+O sistema foi posteriormente validado no âmbito do exercício internacional \gls{repmus25}, mais concretamente no subevento \gls{rex25}, onde demonstrou ser capaz de operar em modo manual e automático, executar rotas definidas por \emph{waypoints} \gls{gps} e manter comunicação fiável em tempo real com uma estação remota. Estes resultados comprovam a eficácia da arquitetura proposta e validam os princípios de modularidade, reutilização e escalabilidade que orientaram o desenvolvimento.  
 
-A sustentabilidade energética poderá ser reforçada através da integração de painéis solares ou de sistemas híbridos de alimentação, aumentando a autonomia em missões prolongadas. Paralelamente, o desenvolvimento de uma interface de monitorização remota, acessível via aplicação web ou móvel, poderá facilitar o acompanhamento em tempo real e o registo histórico das missões realizadas. Finalmente, a realização de ensaios em condições ambientais adversas permitirá avaliar a resiliência e a fiabilidade do sistema em cenários reais de maior exigência.
+De forma global, este trabalho representa um contributo relevante para a área dos sistemas ciberfísicos aplicados à robótica marítima, ao demonstrar que é possível implementar uma solução de baixo custo, reprodutível e extensível, capaz de servir como plataforma de investigação e desenvolvimento tecnológico.
 
-Em síntese, a evolução do sistema deverá orientar-se para o aumento da autonomia, da fiabilidade e da aplicabilidade prática, consolidando o seu papel enquanto plataforma experimental e operacional para investigação e desenvolvimento na área dos veículos marítimos não tripulados \gls{usv}.
+\section{Trabalho Futuro}
+\label{sec:trabalho-futuro}
+
+Com base nos resultados alcançados, foram identificadas várias linhas de evolução que poderão potenciar o sistema desenvolvido e alargar o seu âmbito de aplicação.  
+
+Em primeiro lugar, destaca-se a possibilidade de integração do sistema no \gls{usv}-enautica1, da Escola Superior Náutica Infante D. Henrique, o que permitirá validar o desempenho em cenários de maior escala e com exigências operacionais superiores.  
+
+Outra vertente importante consiste na implementação de um sistema de controlo remoto manual, quer através de um comando dedicado semelhante aos utilizados em rádio controlo, quer através da integração com o comando desenvolvido em \cite{catamara-telecomandado}. Esta abordagem asseguraria a compatibilidade com plataformas operacionais já existentes e aumentaria a flexibilidade do controlo.  
+
+A expansão do sistema para incluir o armazenamento de dados de telemetria num cartão SD é igualmente uma direção promissora, permitindo registar e analisar informações de desempenho de forma contínua.  
+
+Do ponto de vista do controlo, a implementação e avaliação de estratégias mais avançadas, como controladores \gls{pid}, \gls{lqr}, de controlo ótimo ou baseados em aprendizagem por reforço, permitirá melhorar a precisão da trajetória e a robustez da navegação em ambientes dinâmicos.  
+
+Outra linha de evolução consiste na exploração da navegação cooperativa entre múltiplos \gls{usv}, o que exigirá mecanismos de coordenação distribuída e comunicação em rede, seja através de \gls{lora} ou de tecnologias alternativas, como Wi-Fi de longo alcance ou comunicações mesh.  
+
+A integração de sensores adicionais, tais como GNSS multiconstelação, câmaras ou radar de baixo custo, poderá reforçar a precisão da navegação e a capacidade de adaptação do sistema a ambientes marítimos mais complexos.  
+
+A sustentabilidade energética constitui igualmente uma vertente de interesse, podendo ser melhorada através da utilização de painéis solares ou de sistemas híbridos de alimentação, de modo a aumentar a autonomia em missões prolongadas.  
+
+Por fim, a criação de uma interface de monitorização remota, acessível via aplicação web ou móvel, permitirá acompanhar em tempo real o estado do \gls{usv}, planear rotas e consultar o histórico das missões.  
+
+A realização de ensaios em condições ambientais adversas será também fundamental para avaliar a resiliência, a fiabilidade e a maturidade do sistema em cenários operacionais de maior exigência.  
+
+Em síntese, a evolução do sistema deverá concentrar-se no aumento da autonomia, da fiabilidade e da aplicabilidade prática, consolidando o seu papel enquanto plataforma experimental e operacional para investigação e desenvolvimento na área dos veículos de superfície não tripulados \gls{usv}.

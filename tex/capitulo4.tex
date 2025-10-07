@@ -3,7 +3,7 @@
 \chapter{Arquitetura do Sistema}
 \label{ch:arquitetura}
 
-A arquitetura desenvolvida para o \gls{usv} proposto nesta \gls{tfm} apresenta diversas semelhanças com a arquitetura do Robô Didático, descrita em \cite{didactic-robot-thesis}, no Capítulo 4. A experiência obtida nesse trabalho serviu como base conceptual e prática para a definição da presente solução, permitindo a reutilização de princípios estruturais e de integração de módulos.  
+A arquitetura desenvolvida para o \gls{usv} proposto neste \gls{tfm} apresenta diversas semelhanças com a arquitetura do Robô Didático, descrita em \cite{didactic-robot-thesis}, no Capítulo 4. A experiência obtida nesse trabalho serviu como base conceptual e prática para a definição da presente solução, permitindo a reutilização de princípios estruturais e de integração de módulos.  
 
 Este capítulo encontra-se organizado em quatro secções principais. Na Secção \ref{sec:estrutura} é apresentada a estrutura física do protótipo, destacando a configuração adotada e as opções construtivas. A Secção \ref{sec:motor} descreve os motores e o sistema de alimentação que asseguram a propulsão do veículo. Na Secção \ref{sec:esc} analisa-se o papel do \gls{esc} no controlo da velocidade e direção dos propulsores. Por fim, a Secção \ref{sec:sensores} aborda a integração dos principais sensores do sistema, culminando na apresentação das interfaces de comunicação que asseguram a ligação entre os diferentes módulos.
 
@@ -44,7 +44,7 @@ A escolha da estrutura apresentada na Figura \ref{fig:usv-francisco} revela vant
 
 O \gls{usv}-enautica1 apresenta dimensões e peso consideráveis, o que dificulta o seu transporte e limita a sua utilização em testes frequentes. Em contraste, a adoção de um catamarã mais pequeno e leve permite a realização de ensaios de navegação e validação de algoritmos de forma prática e acessível, assegurando maior portabilidade e facilidade de operação.  
 
-É importante salientar que o \gls{usv}-enautica1 utiliza o mesmo tipo de motores \gls{pwm} integrados no protótipo desenvolvido nesta \gls{tfm}, garantindo assim compatibilidade total com os procedimentos de controlo e validação aqui descritos. Esta correspondência tecnológica assegura que os resultados obtidos no protótipo são representativos e transferíveis para sistemas de maior escala.
+É importante salientar que o \gls{usv}-enautica1 utiliza o mesmo tipo de controlo de motores \gls{pwm} integrados no protótipo desenvolvido neste \gls{tfm}, garantindo assim compatibilidade total com os procedimentos de controlo e validação aqui descritos. Esta correspondência tecnológica assegura que os resultados obtidos no protótipo são representativos e transferíveis para sistemas de maior escala desde que o controlo dos motores seja realizado de forma semelhante.
 
 \section{Motores e Alimentação}
 \label{sec:motor}
@@ -61,17 +61,6 @@ Tal como o robô didático descrito em \cite{didactic-robot-thesis}, o \gls{usv}
 % empuxo: força de propulsão gerada por um motor/hélice ao mover um fluido
 Para este projeto foram selecionados os propulsores U01 \cite{apisqueen-underwater-thruster}, concebidos para aplicações em veículos de superfície e submersíveis de pequena escala. Estes motores operam numa faixa de tensão de 12 a 16 V, com uma potência nominal de 200 W, proporcionando até 2 kgf de empuxo em ambos os sentidos de rotação, uma vez que o seu controlador eletrónico (\gls{esc}) permite controlo bidirecional. Esta característica é essencial para o \gls{usv}, uma vez que garante a manobrabilidade necessária tanto para navegação em linha reta como para rotações em torno do próprio eixo permitindo mudar a direção da embarcação.
 
-Para aplicações que exijam maior potência, podem ser utilizados motores mais robustos, como o Endura C2 \cite{datasheet-endura-c2} presentes no \gls{usv}-enautica1 da Sea2Future \cite{sea2future} \cite{sea2future2} e ilustrados tanto na Figura \ref{fig:sea2future} como na Figura \ref{fig:endura-c2}.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.33\linewidth]{figuras/endura-c2.jpg}
-    \caption[Propulsores Endura C2]{Propulsores Endura C2 \cite{datasheet-endura-c2}}
-    \label{fig:endura-c2}
-\end{figure}
-
-Os Endura C2 requerem 30A e são também alimentados externamente por uma bateria de 12V.
-
 Em termos de integração elétrica, como ilustrado na Figura \ref{fig:bat-thruster}, cada motor é alimentado por uma bateria de 12 V de elevada capacidade, de forma a suportar a potência exigida e garantir autonomia de operação durante missões prolongadas. A escolha de propulsores \emph{brushless} deve-se a várias vantagens face aos motores \gls{dc} convencionais: maior eficiência energética, menor desgaste mecânico devido à ausência de escovas, capacidade de fornecer binário elevado a baixas rotações e maior fiabilidade em condições ambientais adversas, como a exposição contínua à água.
 
 Adicionalmente, o sistema de controlo utiliza sinais de \gls{pwm} gerados pelo microcontrolador principal, que são interpretados pelo \gls{esc} de cada motor. Este mecanismo permite ajustar de forma contínua a velocidade e o sentido de rotação, possibilitando manobras precisas, tais como mudanças bruscas de direção ou movimentos de baixa velocidade em ambientes restritos.
@@ -84,6 +73,17 @@ A adoção de dois propulsores oferece um equilíbrio entre simplicidade e manob
     \caption{Integração elétrica dos propulsores}
     \label{fig:bat-thruster}
 \end{figure}
+
+Para aplicações que exijam maior potência, podem ser utilizados motores mais robustos, como o Endura C2 \cite{datasheet-endura-c2} presentes no \gls{usv}-enautica1 da Sea2Future \cite{sea2future} \cite{sea2future2} e ilustrados tanto na Figura \ref{fig:sea2future} como na Figura \ref{fig:endura-c2}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.33\linewidth]{figuras/endura-c2.jpg}
+    \caption[Propulsores Endura C2]{Propulsores Endura C2 \cite{datasheet-endura-c2}}
+    \label{fig:endura-c2}
+\end{figure}
+
+Os Endura C2 \cite{datasheet-endura-c2} requerem uma corrente de 30 A e, à semelhança dos propulsores utilizados neste \gls{tfm}, são alimentados por uma bateria externa de 12 V, garantindo a potência necessária para suportar missões mais exigentes em termos de velocidade e resistência.
 
 \section{\acrfull{esc}}
 \label{sec:esc}
@@ -108,7 +108,7 @@ O controlo bidirecional da rotação é assegurado pelo próprio \gls{esc}, que 
 
 \begin{itemize}
     \item Pulsos inferiores a $1500\,\mu s$ comandam a rotação no sentido inverso (atrás);
-    \item Pulsos superiores a $1500\,\mu s$ comandam a rotação no sentido direto (avante).
+    \item Pulsos superiores a $1500\,\mu s$ comandam a rotação no sentido direto (frente).
 \end{itemize}
 
 Este mecanismo elimina a necessidade de sistemas mecânicos de inversão de polaridade, uma vez que o \gls{esc} efetua digitalmente a comutação das fases do motor \emph{brushless}. A grande vantagem desta abordagem é a elevada precisão no controlo da velocidade, associada a uma resposta rápida e eficiente, fatores críticos para a manobrabilidade do \gls{usv} em cenários marítimos complexos.
@@ -122,16 +122,16 @@ A operação autónoma de um \gls{usv} depende fortemente da disponibilidade de 
 
 No protótipo desenvolvido, a arquitetura de sensorização foi concebida de forma modular, possibilitando a integração e substituição de sensores de maneira independente, sem comprometer a funcionalidade global. Esta abordagem garante escalabilidade e flexibilidade, permitindo adaptar o sistema a diferentes cenários operacionais ou evoluir para missões com requisitos mais complexos.  
 
-Entre os sensores integrados, destacam-se dois elementos centrais. O primeiro é a \acrfull{imu}, responsável por medir aceleração, velocidade angular e intensidade do campo magnético, permitindo calcular com elevada precisão a orientação do veículo nos três eixos principais (\emph{yaw}, \emph{pitch} e \emph{roll}). O segundo é o recetor \acrfull{gps}, que fornece a posição geográfica absoluta em coordenadas de latitude e longitude, constituindo a referência essencial para a definição e seguimento de \emph{waypoints}.  
+Entre os sensores integrados, destacam-se dois elementos centrais. O primeiro é o \acrfull{imu}, responsável por medir aceleração, velocidade angular e intensidade do campo magnético, permitindo calcular com elevada precisão a orientação do veículo nos três eixos principais (\emph{yaw}, \emph{pitch} e \emph{roll}). O segundo é o recetor \acrfull{gps}, que fornece a posição geográfica absoluta em coordenadas de latitude e longitude, constituindo a referência essencial para a definição e seguimento de \emph{waypoints}.  
 
 O uso combinado destes dois sensores permite mitigar as limitações individuais de cada um: enquanto o \gls{imu} fornece dados de orientação com elevada taxa de atualização, mas sofre de erro acumulado, o \gls{gps} disponibiliza medições absolutas de posição, embora com menor frequência e suscetíveis a erros momentâneos. Assim, a fusão de dados provenientes de ambos os sensores garante maior precisão, robustez e fiabilidade na estimativa da trajetória do \gls{usv}.  
 
-As subseções seguintes apresentam em detalhe a integração da \acrfull{imu} (Subsecção \ref{subsec:imu}) e do recetor \acrfull{gps} (Subsecção \ref{subsec:gps}), descrevendo os princípios de funcionamento, a configuração adotada e o contributo de cada sensor para a arquitetura global de navegação.
+As subseções seguintes apresentam em detalhe a integração do \acrfull{imu} (Subsecção \ref{subsec:imu}) e do recetor \acrfull{gps} (Subsecção \ref{subsec:gps}), descrevendo os princípios de funcionamento, a configuração adotada e o contributo de cada sensor para a arquitetura global de navegação.
 
 
 \subsection{\acrfull{imu}} \label{subsec:imu}
 
-O \gls{imu} é um dispositivo essencial para medir a orientação e o movimento do \gls{usv}. Este sensor combina acelerómetros, giroscópios e, em alguns casos, magnetómetros, fornecendo dados sobre aceleração linear, taxas de rotação e direção magnética. Estas medições são processadas para determinar os ângulos de guinada (\emph{yaw}), arfagem (\emph{pitch}) e rotação (\emph{roll}), que descrevem a orientação do veículo no espaço tridimensional, tal como ilustrado na Figura \ref{fig:pitch-roll-yaw}.
+O \gls{imu} é um dispositivo fundamental para medir a orientação e o movimento do \gls{usv}. Este sensor combina três subsistemas principais: acelerómetros, giroscópios e magnetómetros, que medem, respetivamente, a aceleração linear, a velocidade angular e a intensidade do campo magnético terrestre. A partir destes dados é possível calcular os ângulos de guinada (\emph{yaw}), arfagem (\emph{pitch}) e rotação (\emph{roll}), que descrevem a orientação tridimensional da embarcação, como ilustrado na Figura~\ref{fig:pitch-roll-yaw}.
 
 \begin{figure}[H]
     \centering
@@ -140,52 +140,53 @@ O \gls{imu} é um dispositivo essencial para medir a orientação e o movimento 
     \label{fig:pitch-roll-yaw}
 \end{figure}
 
-O \emph{yaw} representa a rotação em torno do eixo vertical e é essencial para controlar a direção do \gls{usv}. O \emph{pitch} mede a inclinação em torno do eixo horizontal, sendo crítico para avaliar o impacto de ondas e alterações na estabilidade longitudinal. Já o \emph{roll} refere-se à oscilação lateral em torno do eixo longitudinal, desempenhando um papel importante na manutenção da estabilidade transversal da embarcação.
+O ângulo de \emph{yaw} representa a rotação em torno do eixo vertical, sendo responsável pela direção do movimento da embarcação. O \emph{pitch} indica a inclinação para a frente e para trás, refletindo a estabilidade longitudinal face às ondas. Por sua vez, o \emph{roll} mede a inclinação lateral, relacionada com a estabilidade transversal do \gls{usv}.
 
-Para este projeto, foram avaliadas diversas opções de \gls{imu} culminando em duas opções: o MPU6050 e o MPU9250. O MPU6050 é um sensor de 6 eixos que integra um acelerómetro e um giroscópio, permitindo medições básicas de orientação e movimento. Apesar da sua simplicidade e baixo custo, a ausência de um magnetómetro limita a sua capacidade de fornecer orientação absoluta, o que pode ser um fator crítico em qualquer aplicação que necessite dos conceitos anteriormente descritos. Por outro lado, o MPU9250 é um sensor de 9 eixos que, além do acelerómetro e do giroscópio, inclui um magnetómetro. Este último componente possibilita medições do campo magnético terrestre, fornecendo informações sobre a direção absoluta, algo indispensável para sistemas de navegação autónoma que dependem de dados precisos para evitar desvios ou erros acumulados.
+No âmbito deste projeto foram avaliadas duas opções de sensores \gls{imu}: o MPU6050 e o MPU9250. O MPU6050 fornece medições em seis eixos (aceleração e velocidade angular), enquanto o MPU9250 adiciona um magnetómetro, totalizando nove graus de liberdade. Este último permite medições absolutas de orientação, compensando o erro acumulado do giroscópio, e foi por isso selecionado para o sistema.
 
-A escolha do MPU9250 (ou equivalente) foi motivada pela sua superioridade técnica em comparação com o MPU6050. A inclusão de um magnetómetro permite compensar erros acumulados pelo giroscópio, garantindo medições mais estáveis e precisas em condições dinâmicas. Além disso, o suporte a técnicas de fusão de sensores (\emph{sensor fusion}), que combinam dados do acelerómetro, giroscópio e magnetómetro, aumenta significativamente a fiabilidade das estimativas de orientação. Apesar de o MPU9250 ter um custo ligeiramente superior e exigir maior esforço de calibração, as suas vantagens, como a capacidade de medição absoluta de orientação, justificam plenamente a sua integração no sistema.
-
-Com o MPU9250, o sistema é capaz de calcular e ajustar a orientação do \gls{usv} em tempo real, permitindo a correção de rota em resposta a forças externas, como correntes marítimas e ondas. Para contextualizar melhor este processo, apresentam-se de seguida os conceitos fundamentais de \emph{yaw}, \emph{pitch} e \emph{roll}, que descrevem a orientação da embarcação nos três eixos principais.
+A partir dos dados fornecidos por este sensor é possível calcular numericamente os ângulos de orientação do \gls{usv}. As equações seguintes descrevem o processo de cálculo de \emph{yaw}, \emph{pitch} e \emph{roll}, com explicação detalhada dos parâmetros envolvidos.
 
 \subsubsection{\emph{Yaw} (\(\Psi\))}
-O ângulo de Yaw (\(\Psi\)) representa a rotação em torno do eixo vertical (\(z\)) (Figura \ref{fig:yaw}) e é calculado utilizando os dados do magnetómetro, corrigidos pela inclinação com base nos ângulos de \emph{pitch} e \emph{roll}. 
+
+O ângulo de guinada (\emph{yaw}, \(\Psi\)) indica a orientação horizontal da embarcação em relação ao norte magnético (Figura~\ref{fig:yaw}). É calculado a partir das medições do magnetómetro corrigidas pela inclinação do sensor, determinada pelos ângulos de \emph{pitch} (\(\Theta\)) e \emph{roll} (\(\Phi\)).
 
 \begin{figure}[H]
     \centering
     \includegraphics[height=0.2\linewidth]{figuras/Yaw.png}
-    \caption[Representação do yaw numa embarcação]{Representação do yaw numa embarcação (Adaptada de \cite{imagem-yaw-pitch-roll})}
+    \caption[Representação do \emph{yaw} numa embarcação]{Representação do \emph{yaw} numa embarcação (Adaptada de \cite{imagem-yaw-pitch-roll})}
     \label{fig:yaw}
 \end{figure}
 
-Primeiramente, calcula-se \(m_x'\) utilizando a Equação \ref{eq:mx_prime}.
+O primeiro passo consiste em compensar a inclinação do sensor nos eixos \(x\) e \(z\), conforme a Equação~\ref{eq:mx_prime}:
 
 \begin{equation}
     m_x' = m_x \cos(\Theta) + m_z \sin(\Theta)
     \label{eq:mx_prime}
-    % \lstequation{Cálculo de \(m_x'\)}
 \end{equation}
 
-Em seguida, \(m_y'\) é obtido com base na Equação \ref{eq:my_prime}.
+onde \(m_x\) e \(m_z\) são as componentes do campo magnético medidas pelo magnetómetro nos respetivos eixos, e \(\Theta\) representa o ângulo de \emph{pitch}.  
+
+De seguida, calcula-se o valor corrigido de \(m_y'\), conforme a Equação~\ref{eq:my_prime}:
 
 \begin{equation}
     m_y' = m_x \sin(\Phi) \sin(\Theta) + m_y \cos(\Phi) - m_z \sin(\Phi) \cos(\Theta)
     \label{eq:my_prime}
-    % \lstequation{Cálculo de \(m_y'\)}
 \end{equation}
 
-Finalmente, o ângulo de \emph{yaw} (\(\Psi\)) é determinado através da Equação \ref{eq:yaw}. 
+em que \(m_y\) é a componente do campo magnético no eixo \(y\), e \(\Phi\) corresponde ao ângulo de \emph{roll}.  
+
+Com as componentes corrigidas \(m_x'\) e \(m_y'\), o ângulo de \emph{yaw} é obtido através da função trigonométrica \(\arctan2\), conforme a Equação~\ref{eq:yaw}:
 
 \begin{equation}
     \Psi = \arctan2(-m_y', m_x')
     \label{eq:yaw}
-    % \lstequation{Cálculo do ângulo de Yaw (\(\Psi\))}
 \end{equation}
 
-Aqui, \(m_x\), \(m_y\) e \(m_z\) são as medições do magnetómetro nos eixos \(x\), \(y\) e \(z\), respetivamente, e os ângulos \(\Theta\) (pitch) e \(\Phi\) (roll) corrigem a inclinação do sensor.
+Esta função assegura que o resultado é atribuído ao quadrante correto, produzindo um ângulo contínuo entre \(-180^\circ\) e \(180^\circ\).
 
 \subsubsection{\emph{Pitch} (\(\Theta\))}
-O ângulo de  \emph{pitch} (\(\Theta\)) representa a inclinação do sensor para frente e para trás (Figura \ref{fig:pitch}).
+
+O ângulo de arfagem (\emph{pitch}, \(\Theta\)) mede a inclinação do \gls{usv} no eixo longitudinal, como mostrado na Figura~\ref{fig:pitch}. É obtido diretamente a partir das leituras do acelerómetro, considerando as acelerações lineares \(a_x\), \(a_y\) e \(a_z\) nos três eixos principais.
 
 \begin{figure}[H]
     \centering
@@ -194,17 +195,18 @@ O ângulo de  \emph{pitch} (\(\Theta\)) representa a inclinação do sensor para
     \label{fig:pitch}
 \end{figure}
 
-Sendo calculado diretamente com base nas medições do acelerómetro, conforme a Equação \ref{eq:pitch}.
+O cálculo é dado pela Equação~\ref{eq:pitch}:
 
 \begin{equation}
     \Theta = \arcsin{\left(\frac{-a_x}{\sqrt{a_x^2 + a_y^2 + a_z^2}}\right)}
     \label{eq:pitch}
 \end{equation}
 
-onde \(a_x\), \(a_y\) e \(a_z\) correspondem às acelerações medidas nos eixos \(x\), \(y\) e \(z\), respetivamente.
+Nesta expressão, \(a_x\), \(a_y\) e \(a_z\) correspondem às componentes da aceleração linear medidas pelo acelerómetro. A normalização pelo termo \(\sqrt{a_x^2 + a_y^2 + a_z^2}\) assegura que o cálculo é independente da intensidade total da aceleração, considerando apenas a direção relativa da gravidade.
 
 \subsubsection{\emph{Roll} (\(\Phi\))}
-O ângulo de \emph{roll} (\(\Phi\)) representa a inclinação lateral (esquerda/direita) (Figura \ref{fig:roll}) e é derivado das medições do acelerómetro, como descrito na Equação \ref{eq:roll}.
+
+O ângulo de rotação (\emph{roll}, \(\Phi\)) representa a inclinação lateral da embarcação em torno do eixo longitudinal, sendo crítico para avaliar a estabilidade transversal (Figura~\ref{fig:roll}).
 
 \begin{figure}[H]
     \centering
@@ -213,15 +215,19 @@ O ângulo de \emph{roll} (\(\Phi\)) representa a inclinação lateral (esquerda/
     \label{fig:roll}
 \end{figure}
 
+Este ângulo é determinado pela Equação~\ref{eq:roll}:
+
 \begin{equation}
-    \Phi = \arctan2{\left(a_y, a_z\right)}
+    \Phi = \arctan2(a_y, a_z)
     \label{eq:roll}
-    % \lstequation{Cálculo do ângulo de Roll (\(\Phi\))}
 \end{equation}
 
-onde \(a_y\) e \(a_z\) são as acelerações medidas nos eixos \(y\) e \(z\), respetivamente. A função \(\arctan2\) é usada para garantir que o ângulo esteja no quadrante correto.
+onde \(a_y\) e \(a_z\) são as acelerações medidas nos eixos transversal e vertical, respetivamente. A função \(\arctan2\) é utilizada para garantir que o ângulo resultante é atribuído ao quadrante correto, permitindo distinguir entre inclinações à esquerda e à direita.  
 
-\subsection{\acrfull{gps}} \label{subsec:gps}
+Em conjunto, as Equações~\ref{eq:mx_prime} a~\ref{eq:roll} permitem calcular de forma precisa a orientação instantânea do \gls{usv}, integrando as leituras do magnetómetro e do acelerómetro para compensar erros e variações dinâmicas durante a navegação.
+
+\subsection{\acrfull{gps}}
+\label{subsec:gps}
 
 O \gls{gps} é uma tecnologia amplamente utilizada para a determinação da posição geográfica de objetos ou indivíduos em qualquer ponto do globo. Este sistema, desenvolvido inicialmente pelo Departamento de Defesa dos Estados Unidos, é constituído por uma constelação de satélites que transmitem sinais de rádio para dispositivos recetores na Terra. Estes sinais são processados para calcular coordenadas geográficas com elevada precisão, fornecendo informações cruciais em aplicações de navegação, monitorização e controlo de sistemas móveis, como veículos autónomos.
 
@@ -238,13 +244,13 @@ No caso do \gls{usv}, apenas são necessários três satélites, pois não é ne
 
 O sistema \gls{gps} depende de relógios atómicos precisos instalados nos satélites para garantir a sincronização temporal. Além disso, algoritmos avançados compensam erros causados por fatores como a atmosfera terrestre e o desvio orbital dos satélites.
 
-Entre as principais vantagens do \gls{gps}, destacam-se a sua elevada precisão, que em condições ideais permite obter localizações com margens de erro de poucos metros, e a cobertura global, que garante funcionalidade em qualquer lugar do mundo, independentemente de fronteiras geográficas. Adicionalmente, o recetor \gls{gps} opera de forma passiva, recebendo sinais sem necessidade de os transmitir, o que contribui para a eficiência energética. A sua facilidade de integração em sistemas autónomos, como os \gls{usv} descritos nesta \gls{tfm}, é também uma característica relevante.
+Entre as principais vantagens do \gls{gps}, destacam-se a sua elevada precisão, que em condições ideais permite obter localizações com margens de erro de poucos metros, e a cobertura global, que garante funcionalidade em qualquer lugar do mundo, independentemente de fronteiras geográficas. Adicionalmente, o recetor \gls{gps} opera de forma passiva, recebendo sinais sem necessidade de os transmitir, o que contribui para a eficiência energética. A sua facilidade de integração em sistemas autónomos, como os \gls{usv} descritos neste \gls{tfm}, é também uma característica relevante.
 
 Por outro lado, o \gls{gps} apresenta algumas limitações, como a dependência de visibilidade direta com os satélites, sendo o sinal frequentemente bloqueado por obstáculos como edifícios, montanhas, vegetação ou nuvêns densas. As condições atmosféricas, incluindo tempestades solares e interferências atmosféricas, podem comprometer a precisão do sistema. Além disso, o consumo energético do recetor, embora moderado, pode ser um desafio em dispositivos com baterias de capacidade limitada. Por fim, o \gls{gps} é vulnerável a interferências e bloqueios intencionais (\emph{jamming}), o que reduz a sua fiabilidade em situações críticas.
 
 Apesar da possibilidade de utilizar apenas um \gls{imu} para estimar a posição e orientação do \gls{usv}, esta abordagem revela-se insuficiente em aplicações que exigem elevada precisão em trajetos extensos. O \gls{imu} utiliza sensores como acelerómetros e giroscópios para calcular deslocações relativas, mas está sujeito a deriva acumulada ao longo do tempo devido a erros nos sensores e no processamento de dados. A combinação com um \gls{gps} é, portanto, fundamental, uma vez que este fornece medições absolutas que corrigem a deriva inerente ao \gls{imu}, assegurando uma navegação fiável e precisa.  
 
-Importa salientar que recetores \gls{gps} são tipicamente configurados e utilizados através de portas série (\gls{uart}), o que representa um desafio quando se pretende integrar múltiplos módulos num sistema que privilegia a comunicação via \gls{i2c}. No contexto desta \gls{tfm}, foi definido como requisito que todos os módulos comunicassem preferencialmente através do barramento \gls{i2c}, de modo a simplificar a arquitetura e reduzir o número de interfaces independentes no microcontrolador. Para alcançar este objetivo, foi integrado um conversor \gls{i2c}-\gls{uart} (SC16IS750), que atua como uma ponte entre os dois protocolos. Esta solução permitiu expandir o número de interfaces série disponíveis sem comprometer a modularidade da arquitetura, garantindo a integração eficiente do \gls{gps} e mantendo a uniformidade da comunicação entre os diferentes módulos do sistema.  
+Importa salientar que recetores \gls{gps} são tipicamente configurados e utilizados através de portas série (\gls{uart}), o que representa um desafio quando se pretende integrar múltiplos módulos num sistema que privilegia a comunicação via \gls{i2c}. No contexto deste \gls{tfm}, foi definido como requisito que todos os módulos comunicassem preferencialmente através do barramento \gls{i2c}, de modo a simplificar a arquitetura e reduzir o número de interfaces independentes no microcontrolador. Para alcançar este objetivo, foi integrado um conversor \gls{i2c}-\gls{uart} (SC16IS750), que atua como uma ponte entre os dois protocolos. Esta solução permitiu expandir o número de interfaces série disponíveis sem comprometer a modularidade da arquitetura, garantindo a integração eficiente do \gls{gps} e mantendo a uniformidade da comunicação entre os diferentes módulos do sistema.  
 
 Concluída a descrição dos sensores principais, torna-se agora pertinente apresentar as interfaces de comunicação adotadas no sistema, que asseguram não apenas a ligação entre sensores e atuadores, mas também a transmissão de dados com a estação remota. Entre estas destacam-se a comunicação de longo alcance via \gls{lora}, o barramento \gls{i2c} como espinha dorsal do sistema modular, e a utilização pontual do \gls{uart} para integração de dispositivos específicos.
 
@@ -262,7 +268,7 @@ Comparado com outras tecnologias, como LTE/4G e XBee \cite{digi-xbee}, o \gls{lo
 
 Entre as vantagens do \gls{lora}, destacam-se o alcance de comunicação longo, que pode superar 10 km em condições ideais, e o baixo consumo energético, essencial para prolongar a autonomia de dispositivos alimentados por bateria. A modulação utilizada oferece robustez contra interferências e ruídos, garantindo comunicação confiável em ambientes adversos, e o custo de implementação, tanto em termos de \emph{hardware} como de infraestrutura, é significativamente inferior ao de outras soluções como LTE/4G. Por outro lado, o \gls{lora} também possui limitações, como a baixa largura de banda, que o torna inadequado para transmissão de grandes volumes de dados, e uma maior latência na entrega de mensagens, que pode ser problemática para aplicações que exigem respostas em tempo real. Adicionalmente, a infraestrutura de comunicação pode necessitar de gateways específicos para integração com redes de maior escala, o que pode ser um desafio em cenários de maior complexidade.
 
-Em termos de alcance, a tecnologia \gls{lora} tem demonstrado um grande potencial (cerca de 45 vezes o alcance inicialmente proposto pela empresa Semtech, a criadora do \gls{lora}). Recentemente, em Portugal, foi estabelecido um novo recorde de distância com \gls{lora}, atingindo os 1336 km \cite{pplware-lora}. Este feito foi realizado no âmbito do projeto Custodian, com a instalação de trackers \gls{lora} num barco de pesca e nas suas boias na costa de Sesimbra, Portugal. O tracker estabeleceu comunicação com um portal nas Ilhas Canárias, localizando-se a mais de 1.300 km de distância. Este recorde foi alcançado ao nível do mar, o que elimina variáveis potenciais introduzidas por altitudes variadas e fornece uma medida mais padronizada das capacidades da tecnologia. Este marco é particularmente notável, pois demonstra a robustez da tecnologia \gls{lora} para comunicações de longa distância em condições reais, e sublinha a sua capacidade de ultrapassar distâncias que antes eram consideradas inatingíveis para outras tecnologias de comunicação sem fios.
+Em termos de alcance, a tecnologia \gls{lora} tem demonstrado um grande potencial (cerca de 45 vezes o alcance inicialmente proposto pela empresa Semtech, a criadora do \gls{lora}). Recentemente, em Portugal, foi estabelecido um novo recorde de distância com \gls{lora}, atingindo os 1336 km \cite{pplware-lora}. Este feito foi realizado no âmbito do projeto Custodian, com a instalação de \emph{trackers} \gls{lora} num barco de pesca e nas suas boias na costa de Sesimbra, Portugal. O tracker estabeleceu comunicação com um portal nas Ilhas Canárias, localizando-se a mais de 1.300 km de distância. Este recorde foi alcançado ao nível do mar, o que elimina variáveis potenciais introduzidas por altitudes variadas e fornece uma medida mais padronizada das capacidades da tecnologia. Este marco é particularmente notável, pois demonstra a robustez da tecnologia \gls{lora} para comunicações de longa distância em condições reais, e sublinha a sua capacidade de ultrapassar distâncias que antes eram consideradas inatingíveis para outras tecnologias de comunicação sem fios.
 
 A Tabela \ref{tab:comparacao_comunicacao} apresenta as diferenças de desempenho entre as tecnologias de comunicação avaliadas para este projeto.
 
@@ -307,7 +313,7 @@ Finalmente, o \gls{uart} é frequentemente utilizado em conjunto com conversores
 
 \section{Sumário}
 
-A arquitetura do sistema desenvolvida para o \gls{usv} nesta \gls{tfm} assenta em quatro pilares fundamentais: a estrutura física, o sistema de propulsão, controlo, os módulos de sensorização e comunicação. A estrutura em configuração de catamarã, construída com recurso a impressão 3D e reforçada com fibra de vidro, garante simultaneamente flutuabilidade, robustez e facilidade de integração dos módulos eletrónicos, através de uma caixa estanque central. Esta solução assegura condições adequadas para testes experimentais e validação de algoritmos de navegação, sem comprometer a compatibilidade com o \gls{usv}-enautica1.
+A arquitetura do sistema desenvolvida para o \gls{usv} neste \gls{tfm} assenta em quatro pilares fundamentais: a estrutura física, o sistema de propulsão, controlo, os módulos de sensorização e comunicação. A estrutura em configuração de catamarã, construída com recurso a impressão 3D e reforçada com fibra de vidro, garante simultaneamente flutuabilidade, robustez e facilidade de integração dos módulos eletrónicos, através de uma caixa estanque central. Esta solução assegura condições adequadas para testes experimentais e validação de algoritmos de navegação, sem comprometer a compatibilidade com o \gls{usv}-enautica1.
 
 Relativamente à propulsão, foram selecionados propulsores \emph{brushless} U01, que se distinguem pela sua eficiência energética, robustez e capacidade de fornecer empuxo bidirecional, controlado através de \gls{esc}. O sistema foi concebido para operar com dois propulsores, equilibrando simplicidade e manobrabilidade, mas mantendo a escalabilidade até quatro unidades para cenários mais exigentes. A gestão energética é assegurada por baterias de 12 V de elevada capacidade, permitindo missões prolongadas.
 

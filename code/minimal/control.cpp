@@ -47,6 +47,6 @@ void Control::setCourse(int bearingError)
     }
     else
     {
-        movement.stop();
+        movement.front(100, 0);
     }
 }
