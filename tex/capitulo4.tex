@@ -96,7 +96,6 @@ O princípio de funcionamento baseia-se na utilização de sinais de \gls{pwm} e
 
 \begin{figure}[H]
     \centering
-    % Substituir pelo diagrama do sinal PWM (1000 \(\mu s\), 1500 \(\mu s\), 2000 \(\mu s\))
     \includegraphics[width=1\linewidth]{figuras/pwm_us.png}
     \caption{Exemplo de sinal \gls{pwm} para o controlo de velocidade e direção num \gls{esc}}
     \label{fig:pwm-sinal}
@@ -145,6 +144,17 @@ O ângulo de \emph{yaw} representa a rotação em torno do eixo vertical, sendo 
 No âmbito deste projeto foram avaliadas duas opções de sensores \gls{imu}: o MPU6050 e o MPU9250. O MPU6050 fornece medições em seis eixos (aceleração e velocidade angular), enquanto o MPU9250 adiciona um magnetómetro, totalizando nove graus de liberdade. Este último permite medições absolutas de orientação, compensando o erro acumulado do giroscópio, e foi por isso selecionado para o sistema.
 
 A partir dos dados fornecidos por este sensor é possível calcular numericamente os ângulos de orientação do \gls{usv}. As equações seguintes descrevem o processo de cálculo de \emph{yaw}, \emph{pitch} e \emph{roll}, com explicação detalhada dos parâmetros envolvidos.
+
+A Figura~\ref{fig:imu-axes-equations} apresenta uma representação tridimensional dos eixos do sensor \gls{imu} e dos ângulos de orientação (\emph{yaw}, \emph{pitch} e \emph{roll}) obtidos a partir das medições dos seus três subsistemas principais: o acelerómetro, o giroscópio e o magnetómetro.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{figuras/imu_orientation_plot.png}
+    \caption[Representação tridimensional dos eixos do \gls{imu} e ângulos de orientação]{Representação tridimensional dos eixos do \gls{imu} e dos ângulos de orientação \emph{yaw} (\(\Psi\)), \emph{pitch} (\(\Theta\)) e \emph{roll} (\(\Phi\)). São ainda mostrados os vetores de aceleração \(\vec{a} = (a_x, a_y, a_z)\) e de campo magnético \(\vec{m} = (m_x, m_y, m_z)\), que servem de base para o cálculo das equações apresentadas de seguida.}
+    \label{fig:imu-axes-equations}
+\end{figure}
+
+Estes sensores medem, respetivamente, a aceleração linear, a velocidade angular e a intensidade do campo magnético terrestre em torno dos três eixos ortogonais \(x\), \(y\) e \(z\).
 
 \subsubsection{\emph{Yaw} (\(\Psi\))}
 

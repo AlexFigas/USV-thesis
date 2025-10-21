@@ -39,7 +39,7 @@ Outra abordagem alternativa é o \emph{Saildrone} \cite{saildrone}, representado
 
 Este tipo de \gls{usv} tem sido amplamente utilizado em campanhas de monitorização oceânica de larga escala, tirando partido da elevada autonomia oferecida pela energia eólica.  
 
-Apesar das vantagens associadas à utilização de fontes renováveis, as \gls{usv} motorizadas oferecem maior controlo de navegação, velocidade e manobrabilidade, características essenciais em ambientes de correntes variáveis ou condições marítimas adversas. Um exemplo relevante é o SeaRobotics SR-Surveyor \cite{sr-surveyor-class}, amplamente utilizado em levantamentos hidrográficos e mapeamento subaquático, equipado com sonar multifeixe para operações precisas em ambientes costeiros e portuários.  
+Apesar das vantagens associadas à utilização de fontes renováveis, as \gls{usv} motorizadas oferecem maior controlo de navegação, velocidade e manobrabilidade, características essenciais em ambientes de correntes variáveis ou condições marítimas adversas. Um exemplo relevante é o SeaRobotics SR-Surveyor \cite{sr-surveyor-class}, ilustrado na Figura \ref{fig:sr-surveyor-carrinha}, amplamente utilizado em levantamentos hidrográficos e mapeamento subaquático, equipado com sonar multifeixe para operações precisas em ambientes costeiros e portuários.  
 
 \begin{figure}[H]
     \centering
@@ -75,9 +75,9 @@ Nos últimos anos, os avanços tecnológicos em sistemas de controlo e sensoriza
 \section{\emph{Background}} 
 \label{sec:background}
 
-Durante o percurso académico da licenciatura, foi desenvolvido um projeto descrito em \cite{didactic-robot-thesis}, cujo objetivo principal consistiu na criação de um ambiente didático orientado para a exploração de conceitos fundamentais em robótica, como o controlo de movimento, a comunicação sem fios e a programação em C e Java. O resultado deste trabalho foi um protótipo funcional de robô didático, concebido como uma ferramenta pedagógica eficaz.  
+Durante o percurso académico da licenciatura, foi desenvolvido um projeto descrito em \cite{didactic-robot-thesis}, cujo objetivo principal consistiu na criação de um ambiente didático orientado para a exploração de conceitos fundamentais em robótica, como o controlo de movimento, a comunicação sem fios e a programação em C e Java. O resultado foi um protótipo funcional de robô didático, concebido como uma ferramenta simples mas completa do ponto de vista pedagógico.  
 
-A arquitetura do sistema, apresentada em \cite{didactic-robot-thesis} e ilustrada na Figura \ref{fig:arquitetura-robo-didatico}, foi concebida segundo uma abordagem modular e expansível. Esta estrutura permitia a integração de até quatro motores (localizados na parte direita da figura), incluía os módulos de comunicação (representados no centro) e os módulos de sensorização (à esquerda), possibilitando a implementação e validação de diferentes configurações de forma flexível e adaptável.
+A arquitetura, apresentada em \cite{didactic-robot-thesis} e ilustrada na Figura~\ref{fig:arquitetura-robo-didatico}, foi concebida segundo uma abordagem modular e expansível, integrando até quatro motores, módulos de comunicação e sensores. Esta estrutura permitia a substituição ou expansão de componentes de forma rápida e segura, promovendo a reutilização e a experimentação prática.
 
 \begin{figure}[H]
     \centering
@@ -86,7 +86,7 @@ A arquitetura do sistema, apresentada em \cite{didactic-robot-thesis} e ilustrad
     \label{fig:arquitetura-robo-didatico}
 \end{figure}
 
-O projeto culminou na construção de um protótipo físico, ilustrado na Figura \ref{fig:estrutura-robo-didatico}, que materializou a arquitetura proposta e demonstrou em ambiente real a integração de motores, sensores e módulos de comunicação. Esta validação experimental confirmou a viabilidade da abordagem modular, destacando a facilidade de substituição ou expansão de componentes.  
+O protótipo físico, apresentado na Figura~\ref{fig:estrutura-robo-didatico}, demonstrou em ambiente real a integração de motores, sensores e módulos de comunicação, confirmando a eficácia da abordagem modular e a sua aplicabilidade em contextos didáticos e experimentais.  
 
 \begin{figure}[H]
     \centering
@@ -95,10 +95,19 @@ O projeto culminou na construção de um protótipo físico, ilustrado na Figura
     \label{fig:estrutura-robo-didatico}
 \end{figure}
 
-Um dos elementos centrais desta arquitetura era o controlador de motores, que assegurava a ligação entre a bateria principal e os diferentes atuadores. Este módulo não só suportava uma ampla gama de tensões de entrada, adequada para motores de diferentes características, como também fornecia uma saída regulada para o microcontrolador, simplificando a gestão energética do sistema. A presença de um interruptor dedicado entre a bateria e o controlador permitia desligar rapidamente todo o sistema em situações de teste ou emergência, reforçando a segurança operacional.  
+O presente \gls{tfm} surge como uma evolução natural desse trabalho, aplicando os princípios de modularidade e escalabilidade ao desenvolvimento de um \gls{usv} com capacidade de navegação autónoma. Mantendo o barramento \gls{i2c} como base de comunicação, os motores \gls{dc} foram substituídos por propulsores \emph{brushless} controlados por \gls{esc}, mais adequados ao ambiente marítimo. Do mesmo modo, os encoders e sonares do robô terrestre foram substituídos por um \gls{imu} e um \gls{gps}, sensores capazes de medir orientação e posição absolutas, essenciais para corrigir erros provocados por correntes, vento e ondulação.  
 
-O presente \gls{tfm} surge como uma evolução natural deste projeto, aplicando e expandindo os conceitos adquiridos para o desenvolvimento de um \gls{usv} com capacidade de navegação autónoma. Embora a lógica base da arquitetura tenha sido mantida, nomeadamente a utilização do barramento \gls{i2c} como interface principal de comunicação, foram realizadas adaptações relevantes. Os motores \gls{dc} do robô didático foram substituídos por propulsores \emph{brushless}, controlados por \gls{esc}, mais adequados ao ambiente marítimo.  
+Em paralelo, este trabalho relaciona-se também com o projeto desenvolvido pela \gls{enidh} em \cite{catamara-telecomandado}, que utilizou o mesmo catamarã como plataforma experimental. Apesar de funcional, essa versão apresentava limitações significativas ao nível da integração eletrónica e do controlo. O sistema baseia-se em duas placas Arduino (Mega e Nano) interligadas, com cablagem extensa e propensa a falhas, conforme ilustrado na Figura~\ref{fig:catamara-fios}.  
 
-Adicionalmente, foram removidos sensores como o sonar e os encoders, que no contexto terrestre permitiam estimar a distância percorrida a partir do número de rotações da roda. No caso de um \gls{usv}, esta abordagem revela-se inviável, pois fatores externos como correntes, vento ou turbulência influenciam a relação entre rotações do propulsor e distância efetivamente percorrida. Para superar esta limitação, os encoders foram substituídos por um \gls{imu} e por um \gls{gps}, que fornecem medições absolutas de aceleração e orientação, permitindo estimar com maior precisão o movimento do veículo em ambiente marítimo.  
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=1.0\linewidth, angle=90]{figuras/catamara-fios.jpeg}
+    \caption[Arquitetura eletrónica do catamarã atual]{Arquitetura eletrónica do catamarã desenvolvido em \cite{catamara-telecomandado}, evidenciando o emaranhado de fios utilizado para interligar os diversos módulos.}
+    \label{fig:catamara-fios}
+\end{figure}
 
-Assim, o trabalho desenvolvido na licenciatura serviu de alicerce conceptual e experimental para o presente \gls{tfm}, onde a arquitetura foi adaptada a um contexto mais exigente, integrando sensores e atuadores adequados às particularidades da navegação marítima.
+Essa arquitetura rígida, dependente de comunicação por rádio frequência tradicional, limita o alcance e a escalabilidade do sistema. Em contraste, a solução proposta neste \gls{tfm} recorre a um único microcontrolador \gls{esp32}, que integra num só módulo o processamento e comunicação. A comunicação \gls{lora} substitui a rádio frequência, aumentando o alcance e a fiabilidade, enquanto a introdução de uma \gls{pcb} dedicada elimina o emaranhado de fios, reduzindo falhas e facilitando a replicação do sistema.
+
+A principal diferença conceptual entre os dois sistemas reside na flexibilidade e adaptabilidade da arquitetura. O sistema anterior foi concebido especificamente para o catamarã, com ligações ponto a ponto e dependências fixas entre módulos. Já o sistema desenvolvido neste \gls{tfm} adota uma estrutura modular e reconfigurável, capaz de ser aplicada em diferentes plataformas marítimas ou terrestres com modificações mínimas de \emph{hardware} e \emph{software}.  
+
+Em síntese, este trabalho consolida um percurso evolutivo iniciado com o robô didático e amadurecido com a análise crítica do catamarã existente. O resultado é uma plataforma ciberfísica integrada, escalável e versátil, que alia a robustez experimental à capacidade de adaptação a novos contextos de investigação e desenvolvimento em robótica marítima.

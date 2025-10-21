@@ -164,7 +164,7 @@ A Figura \ref{fig:pcb-esquematica-vs-real} ilustra a comparação entre a esquem
     \begin{minipage}{0.45\linewidth}
         \centering
         \includegraphics[width=0.80\linewidth]{figuras/PCB_PCB_USV-Board_2025-09-21.png}
-        \caption*{(A) \emph{Layout} da PCB}
+        \caption*{(A) \emph{Layout} da \gls{pcb}}
     \end{minipage}
     \hfill
     \begin{minipage}{0.40\linewidth}
@@ -279,7 +279,7 @@ N_{\text{payload}} = 8 + \max \left( \left\lceil \frac{8 \cdot PL - 4 \cdot SF +
 
 Na Equação~\ref{eq:toa2}, $PL$ representa o tamanho da carga útil (em bytes), $CRC$ indica se o mecanismo de verificação de erros (\gls{crc}) está ativo, $H$ distingue entre cabeçalho explícito ou implícito, e $DE$ refere-se à otimização para baixas taxas de dados (\emph{Low Data Rate Optimization}).  
 
-O parâmetro $H$ define o modo de cabeçalho utilizado na transmissão LoRa.  
+O parâmetro $H$ define o modo de cabeçalho utilizado na transmissão \gls{lora}.  
 No modo \textbf{explícito} ($H = 0$), o pacote inclui um cabeçalho que contém informações sobre o comprimento da carga útil, a taxa de codificação (\emph{Coding Rate}) e a ativação do \gls{crc}. Este modo é mais flexível e amplamente utilizado, pois permite ao recetor interpretar dinamicamente os parâmetros de cada pacote recebido, sendo ideal para sistemas onde os pacotes podem ter tamanhos ou configurações distintas.  
 
 Por outro lado, no modo \textbf{implícito} ($H = 1$), o cabeçalho é omitido, reduzindo ligeiramente o tamanho e o tempo total de transmissão do pacote. Contudo, este modo requer que o recetor conheça previamente todos os parâmetros de configuração da transmissão (comprimento da carga útil, taxa de codificação e presença do \gls{crc}), uma vez que essas informações não são incluídas no próprio pacote.  
@@ -368,14 +368,14 @@ O principal benefício da utilização de \texttt{Protobuf} reside na sua efici�
 
 Durante a fase de testes, verificou-se a correta inicialização do transceptor e a integridade dos pacotes transmitidos e recebidos. Foram validados contadores internos de envio e receção, disponíveis na classe \texttt{LoRaDuplex}, que permitem avaliar de forma contínua o desempenho da comunicação. Os ensaios confirmaram a estabilidade em cenários de linha de vista, assegurando que o sistema mantém comunicação fiável em condições típicas de operação em ambiente marítimo.  
 
-Em síntese, a integração da comunicação LoRa no TTGO \gls{lora}32, em conjunto com a abstração fornecida pelas classes \texttt{LoRaDuplex} e \texttt{LoRaProto}, resultou numa solução eficiente, escalável e robusta, permitindo não apenas o envio de telemetria em tempo real, mas também a receção de comandos de controlo com latência minima.
+Em síntese, a integração da comunicação \gls{lora} no TTGO \gls{lora}32, em conjunto com a abstração fornecida pelas classes \texttt{LoRaDuplex} e \texttt{LoRaProto}, resultou numa solução eficiente, escalável e robusta, permitindo não apenas o envio de telemetria em tempo real, mas também a receção de comandos de controlo com latência minima.
 
 \section{Sumário}
 \label{sec:implementacao-sumario}
 
 A implementação do sistema ciberfísico descrito neste capítulo seguiu uma abordagem modular, tanto ao nível do \emph{hardware} como do \emph{software}. No que respeita ao \emph{hardware}, foi realizada a integração progressiva dos propulsores, sensores, módulos de comunicação e gestão de energia numa \gls{pcb} dedicada, assegurando fiabilidade, simplicidade de montagem e escalabilidade futura.  
 
-Ao nível do \emph{software}, a arquitetura foi organizada em pacotes independentes, promovendo o encapsulamento de funcionalidades e a reutilização de código. Foram desenvolvidos módulos próprios para o controlo dos motores, aquisição e processamento de dados de sensores, comunicação sem fios via LoRa e navegação autónoma baseada em \emph{waypoints}. Esta modularidade garante não só a clareza e robustez do sistema, mas também a sua capacidade de evolução, permitindo a integração de novos sensores, algoritmos de controlo mais avançados ou protocolos de comunicação alternativos.  
+Ao nível do \emph{software}, a arquitetura foi organizada em pacotes independentes, promovendo o encapsulamento de funcionalidades e a reutilização de código. Foram desenvolvidos módulos próprios para o controlo dos motores, aquisição e processamento de dados de sensores, comunicação sem fios via \gls{lora} e navegação autónoma baseada em \emph{waypoints}. Esta modularidade garante não só a clareza e robustez do sistema, mas também a sua capacidade de evolução, permitindo a integração de novos sensores, algoritmos de controlo mais avançados ou protocolos de comunicação alternativos.  
 
 A utilização de técnicas de programação não bloqueantes assegurou a execução fluida do ciclo principal, conciliando a leitura de sensores, o envio de telemetria, a receção de comandos e o controlo dos propulsores em tempo real. A adoção de \texttt{Protobuf} para a serialização das mensagens reforçou a eficiência da comunicação, reduzindo o tempo de transmissão e o consumo energético.  
 
