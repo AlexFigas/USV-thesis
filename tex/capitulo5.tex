@@ -5,7 +5,7 @@
 
 Neste capítulo é apresentada a implementação do sistema ciberfísico desenvolvido, abordando de forma integrada as suas componentes de \emph{hardware} e \emph{software}. Esta análise encontra-se organizada em quatro secções principais, permitindo compreender a forma como o sistema foi concebido, desenvolvido e validado.  
 
-Na Secção~\ref{sec:plataforma-desenvolvimento} descreve-se a plataforma de desenvolviment}, onde são analisadas as ferramentas e tecnologias utilizadas tanto a nível de microcontrolador como do ambiente de programação. A Secção~\ref{sec:implementacao-hardware} aborda a implementação de \emph{hardware}, apresentando a integração dos propulsores, sensores, módulos de comunicação e a conceção da \gls{pcb}. Na Secção~\ref{sec:implementacao-software} é detalhada a implementação de \emph{software}, incluindo a arquitetura modular, o controlo dos motores, o processamento de dados dos sensores e a comunicação via \gls{lora}. Por fim, a Secção~\ref{sec:implementacao-sumario} apresenta um sumário conclusivo, sintetizando os principais resultados e destacando as decisões de projeto que asseguram a robustez, escalabilidade e reprodutibilidade do sistema.  
+Na Secção~\ref{sec:plataforma-desenvolvimento} descreve-se a plataforma de desenvolvimento, onde são analisadas as ferramentas e tecnologias utilizadas tanto a nível de microcontrolador como do ambiente de programação. A Secção~\ref{sec:implementacao-hardware} aborda a implementação de \emph{hardware}, apresentando a integração dos propulsores, sensores, módulos de comunicação e a conceção da \gls{pcb}. Na Secção~\ref{sec:implementacao-software} é detalhada a implementação de \emph{software}, incluindo a arquitetura modular, o controlo dos motores, o processamento de dados dos sensores e a comunicação via \gls{lora}. Por fim, a Secção~\ref{sec:implementacao-sumario} apresenta um sumário conclusivo, sintetizando os principais resultados e destacando as decisões de projeto que asseguram a robustez, escalabilidade e reprodutibilidade do sistema.
 
 Esta organização permite uma leitura estruturada e progressiva, conduzindo o leitor do contexto geral de desenvolvimento até aos detalhes técnicos da implementação que materializam o sistema proposto.
 
@@ -40,7 +40,7 @@ Em síntese, o módulo TTGO \gls{lora}32 constituiu uma plataforma robusta, vers
 \subsection{Ambiente de Programação}
 \label{subsec:ambiente-programacao}
 
-O desenvolvimento do \emph{software} para o protótipo do \gls{usv} foi realizado recorrendo ao ambiente de programação PlatformIO, integrado no editor Visual Studio Code. Esta escolha deve-se às vantagens oferecidas pelo PlatformIO, nomeadamente a gestão centralizada de bibliotecas e o controlo de versões das mesmas, a configuração automatizada do ambiente de compilação e a possibilidade de integração com múltiplos \emph{frameworks} de desenvolvimento.  
+O desenvolvimento do \emph{software} para o protótipo do \gls{usv} foi realizado recorrendo ao ambiente de programação PlatformIO \cite{platformio}, integrado no editor Visual Studio Code. Esta escolha deve-se às vantagens oferecidas pelo PlatformIO, nomeadamente a gestão centralizada de bibliotecas e o controlo de versões das mesmas, a configuração automatizada do ambiente de compilação e a possibilidade de integração com múltiplos \emph{frameworks} de desenvolvimento.
 
 Um exemplo claro destas funcionalidades pode ser observado no ficheiro de configuração \texttt{platformio.ini}. Este ficheiro define todas as dependências e parâmetros necessários para compilar e carregar o projeto, assegurando que qualquer programador envolvido no desenvolvimento utiliza exatamente as mesmas versões de bibliotecas e definições de compilação. A Listagem \ref{lst:platformio} mostra um exemplo de um ficheiro de configuração do PlatformIO.
 
@@ -50,18 +50,18 @@ Neste caso, a secção \texttt{[env:ttgo-lora32-v1]} especifica o ambiente de co
 
 Este mecanismo garante que o projeto é reprodutível e portável, sendo apenas necessário clonar o repositório e executar a compilação para obter um ambiente idêntico, sem necessidade de configurar manualmente as bibliotecas ou dependências.
 
-No âmbito deste projeto, foi utilizada a \emph{framework} Arduino do PlatformIO, pela sua simplicidade e pela ampla disponibilidade de bibliotecas compatíveis com o \gls{esp32}. Alternativamente, o \gls{esp-idf} poderia ter sido utilizado, oferecendo maior controlo de baixo nível e otimizações de desempenho, mas a sua maior complexidade tornaria o ciclo de desenvolvimento menos ágil. Assim, a opção pelo ecossistema Arduino mostrou-se mais adequada à prototipagem rápida e à integração de múltiplos sensores e interfaces de comunicação.  
+No âmbito deste projeto, foi utilizada a \emph{framework} Arduino do PlatformIO \cite{platformio-arduino-framework}, pela sua simplicidade e pela ampla disponibilidade de bibliotecas compatíveis com o \gls{esp32}. Alternativamente, o \gls{esp-idf} poderia ter sido utilizado, oferecendo maior controlo de baixo nível e otimizações de desempenho, mas a sua maior complexidade tornaria o ciclo de desenvolvimento menos ágil. Assim, a opção pelo ecossistema Arduino  mostrou-se mais adequada à prototipagem rápida e à integração de múltiplos sensores e interfaces de comunicação.
 
 Para além destas ferramentas, foi também utilizado o sistema de controlo de versões Git, com integração em repositório remoto público (\emph{open source}) no GitHub \cite{github-usv}. Este processo assegurou a rastreabilidade das alterações, a organização das diferentes versões do código e a possibilidade de colaboração futura.  
 
-Embora o desenvolvimento principal tenha sido efetuado no Visual Studio Code com o suporte do PlatformIO, foram também realizados testes complementares na Arduino IDE, devido à sua simplicidade na programação inicial do \gls{esp32} e na verificação rápida da compatibilidade das bibliotecas utilizadas.  
+Embora o desenvolvimento principal tenha sido efetuado no Visual Studio Code com o suporte do PlatformIO, foram também realizados testes complementares no ambiente Arduino IDE, devido à sua simplicidade na programação inicial do \gls{esp32} e na verificação rápida da compatibilidade das bibliotecas utilizadas.
 
 Em síntese, a combinação destas ferramentas permitiu estabelecer um ambiente de desenvolvimento robusto, flexível e adaptado às exigências do projeto, ao mesmo tempo que garantiu escalabilidade e reprodutibilidade para trabalhos futuros.
 
 \section{Implementação de \emph{Hardware}}
 \label{sec:implementacao-hardware}
 
-A implementação do \emph{hardware} do sistema desenvolvido neste \gls{tfm} assenta numa arquitetura modular, representada de forma esquemática no Anexo \ref{anexo:pcb}. Tal como no projeto realizado em \cite{didactic-robot-thesis}, procurou-se manter uma estrutura clara e escalável, onde cada componente desempenha um papel bem definido e comunica com a unidade central de forma eficiente.  
+A implementação do \emph{hardware} do sistema desenvolvido neste \gls{tfm} assenta numa arquitetura modular, representada na forma de esquema elétrico no Anexo \ref{anexo:pcb}. Tal como no projeto realizado em \cite{didactic-robot-thesis}, procurou-se manter uma estrutura clara e escalável, onde cada componente desempenha um papel bem definido e comunica com a unidade central de forma eficiente.
 
 O núcleo do sistema é constituído pelo microcontrolador \gls{esp32}, responsável por coordenar a execução das tarefas de controlo, comunicação e aquisição de dados. Através do barramento \gls{i2c}, o \gls{esp32} comunica com um expansor, responsável pela distribuição dos sinais de controlo e pela interface com os diferentes periféricos \gls{pwm}. Este dispositivo disponibiliza 16 canais adicionais de saída a partir de apenas dois pinos de comunicação \gls{i2c} (SDA e SCL), sendo ainda possível encadear múltiplos expansores para aumentar o número de canais disponíveis. Esta solução permite ultrapassar a limitação do número de pinos físicos do microcontrolador, assegurando a escalabilidade do sistema e reduzindo simultaneamente a complexidade das interligações elétricas, o que simplifica a integração de novos módulos funcionais.
 
@@ -72,7 +72,7 @@ Esta representação global serve como ponto de partida para a descrição detal
 
 A propulsão do \gls{usv} é assegurada por dois propulsores elétricos independentes, cada um alimentado por uma bateria dedicada de 12 V. Esta configuração garante uma fonte de energia estável e suficientemente dimensionada para fornecer a corrente necessária ao funcionamento contínuo dos motores, reduzindo simultaneamente o risco de sobrecarga caso ambos fossem alimentados por uma única bateria.  
 
-A descrição detalhada das características dos motores e do respetivo sistema de controlo eletrónico encontra-se apresentada na Secção \ref{sec:motor}, enquanto o princípio de funcionamento dos \gls{esc} é explicado na Secção \ref{sec:esc}. Aqui, foca-se a forma como esses componentes foram efetivamente integrados no protótipo desenvolvido.  
+A descrição detalhada das características dos motores e do respetivo sistema de controlo eletrónico encontra-se apresentada na Secção \ref{sec:motor}, enquanto o princípio de funcionamento dos \gls{esc} é descrito na Secção \ref{sec:esc}. Aqui, foca-se a forma como esses componentes foram efetivamente integrados no protótipo desenvolvido.
 
 Cada propulsor encontra-se ligado ao respetivo \gls{esc}, responsável por converter os sinais de controlo recebidos em impulsos elétricos adequados ao motor \emph{brushless}. Tal como descrito anteriormente, o controlo é realizado por sinais de \gls{pwm}, sendo que, no protótipo implementado, o propulsor esquerdo foi ligado ao canal 14 do expansor, enquanto o propulsor direito foi associado ao canal 15. Apesar desta atribuição, qualquer outro canal disponível poderia ser utilizado, uma vez que a correspondência é definida ao nível do \emph{software}.  
 
@@ -127,7 +127,7 @@ No entanto, dado que a porta série principal do \gls{esp32} foi reservada para 
 
 Um aspeto crítico na integração deste módulo prende-se com a compatibilidade elétrica. Embora o BN-880 seja alimentado a 5 V, o \gls{esp32} opera a 3.3 V nos seus pinos de entrada/saída digitais. Para evitar danos no microcontrolador e assegurar a comunicação fiável, foi introduzido um conversor de nível lógico, responsável por adaptar os sinais da interface \gls{uart} entre os dois dispositivos.  
 
-A alimentação do módulo é assegurada diretamente pela linha de 5 V do sistema, enquanto as ligações de dados (TX e RX) passam pelo conversor de nível lógico antes de chegar ao \gls{esp32}. Esta configuração garante a integridade do sinal e a proteção dos módulos. As ligações elétricas detalhadas podem ser observadas no Anexo \ref{anexo:pcb}, na Figura \ref{fig:esquematica-gps}, que apresenta a esquemática correspondente.  
+A alimentação do módulo é assegurada diretamente pela linha de 5 V do sistema, enquanto as ligações de dados (TX e RX) passam pelo conversor de nível lógico antes de chegar ao \gls{esp32}. Esta configuração garante a integridade do sinal e a proteção dos módulos. As ligações elétricas detalhadas podem ser observadas no Anexo \ref{anexo:pcb}, na Figura \ref{fig:esquematica-gps}, que apresenta o esquema elétrico correspondente.
 
 Tal como o \gls{imu}, o módulo \gls{gps} foi instalado no interior da caixa estanque, com especial atenção à orientação da antena integrada, de forma a manter visibilidade direta com o céu e reduzir obstruções ao sinal.
 
@@ -157,7 +157,7 @@ No que respeita à navegação, o recetor \gls{gps} BN-880 foi integrado no sist
 
 Por fim, a gestão de energia foi contemplada através da inclusão de conectores específicos para a entrada de energia principal a 12~V, interruptores de corte que permitem desligar o sistema de forma segura e \gls{led} indicadores que fornecem feedback visual sobre o estado de funcionamento.  
 
-A Figura \ref{fig:pcb-esquematica-vs-real} ilustra a comparação entre a esquemática desenvolvida e a implementação física da placa.
+A Figura \ref{fig:pcb-esquematica-vs-real} ilustra a comparação entre o esquema elétrico desenvolvida e a implementação física da placa.
 
 \begin{figure}[H]
     \centering
@@ -176,7 +176,7 @@ A Figura \ref{fig:pcb-esquematica-vs-real} ilustra a comparação entre a esquem
     \label{fig:pcb-esquematica-vs-real}
 \end{figure}
 
-As esquemáticas completas encontram-se documentadas no Anexo \ref{anexo:pcb}, permitindo uma análise detalhada de cada ligação elétrica. A versão montada da \gls{pcb} encontra-se representada na Figura \ref{fig:pcb-final}, onde é possível identificar a disposição dos principais módulos e as camadas de interligação.  
+Os esquemas elétricos completos encontram-se documentadas no Anexo \ref{anexo:pcb}, permitindo uma análise detalhada de cada ligação elétrica. A versão montada da \gls{pcb} encontra-se representada na Figura \ref{fig:pcb-final}, onde é possível identificar a disposição dos principais módulos e as camadas de interligação.
 
 \begin{figure}[H]
     \centering
@@ -194,9 +194,9 @@ A implementação de \emph{software} constituiu a camada lógica do sistema dese
 
 O código foi estruturado para garantir três requisitos principais: funcionamento não bloqueante, escalabilidade e reutilização. O primeiro requisito assegura que todas as tarefas críticas, como leitura de sensores, controlo dos motores e receção de comandos, são executadas sem interrupções prolongadas, preservando a responsividade do sistema. O segundo requisito garante que novos módulos ou algoritmos de controlo podem ser facilmente integrados, acompanhando a evolução do protótipo. O terceiro requisito promove a portabilidade do código para outros projetos semelhantes, mantendo a mesma filosofia modular que guiou a implementação do Robot Didático \cite{didactic-robot-thesis}.  
 
-Importa ainda destacar que todo o código desenvolvido no âmbito deste \gls{tfm} foi disponibilizado em regime de \emph{open source}, encontrando-se acessível num repositório público de controlo de versões na plataforma GitHub \cite{github-usv}. Esta decisão assegura não apenas a transparência e reprodutibilidade científica, mas também a possibilidade de reutilização, extensão e validação por parte de outros estudantes, investigadores, profissionais da área e qualquer curioso.
+Importa ainda destacar que todo o código desenvolvido no âmbito deste \gls{tfm} foi disponibilizado em regime de \emph{open source}, encontrando-se acessível num repositório público de controlo de versões na plataforma GitHub \cite{github-usv}. Esta decisão assegura não apenas a transparência e reprodutibilidade científica, mas também a possibilidade de reutilização, extensão e validação por parte de outros estudantes, investigadores, profissionais da área.
 
-Ao longo desta secção são descritos os principais aspetos da implementação de \emph{software}, incluindo a integração dos subsistemas no ciclo principal na Subsecção~\ref{sec:integracao}, a arquitetura modular do código na Subsecção~\ref{subsec:arquitetura-codigo}, o controlo dos motores na Subsecção~\ref{subsec:controlo-de-motores}, a leitura e processamento dos sensores na Subsecção~\ref{subsec:processamento-sensores} e a comunicação via \gls{lora} com mensagens estruturadas em \texttt{Protobuf} na Subsecção~\ref{subsec:comunicacao-lora}. Estes elementos, em conjunto, constituem a base funcional que permite ao veículo operar de forma autónoma ou manual, com monitorização e controlo em tempo real.
+Ao longo desta secção são descritos os principais aspetos da implementação de \emph{software}, incluindo a integração dos subsistemas no ciclo principal na Subsecção~\ref{sec:integracao}, a arquitetura modular do código na Subsecção~\ref{subsec:arquitetura-codigo}, o controlo dos motores na Subsecção~\ref{subsec:controlo-de-motores}, a leitura e processamento dos sensores na Subsecção~\ref{subsec:processamento-sensores} e a comunicação via \gls{lora} com mensagens estruturadas em \texttt{Protobuf} \cite{google-protobuf} na Subsecção~\ref{subsec:comunicacao-lora}. Estes elementos, em conjunto, constituem a base funcional que permite ao veículo operar de forma autónoma ou manual, com monitorização e controlo em tempo real.
 
 \subsection{Integração do Sistema}
 \label{sec:integracao}
@@ -280,9 +280,9 @@ N_{\text{payload}} = 8 + \max \left( \left\lceil \frac{8 \cdot PL - 4 \cdot SF +
 Na Equação~\ref{eq:toa2}, $PL$ representa o tamanho da carga útil (em bytes), $CRC$ indica se o mecanismo de verificação de erros (\gls{crc}) está ativo, $H$ distingue entre cabeçalho explícito ou implícito, e $DE$ refere-se à otimização para baixas taxas de dados (\emph{Low Data Rate Optimization}).  
 
 O parâmetro $H$ define o modo de cabeçalho utilizado na transmissão \gls{lora}.  
-No modo \textbf{explícito} ($H = 0$), o pacote inclui um cabeçalho que contém informações sobre o comprimento da carga útil, a taxa de codificação (\emph{Coding Rate}) e a ativação do \gls{crc}. Este modo é mais flexível e amplamente utilizado, pois permite ao recetor interpretar dinamicamente os parâmetros de cada pacote recebido, sendo ideal para sistemas onde os pacotes podem ter tamanhos ou configurações distintas.  
+No modo explícito ($H = 0$), o pacote inclui um cabeçalho que contém informações sobre o comprimento da carga útil, a taxa de codificação (\emph{Coding Rate}) e a ativação do \gls{crc}. Este modo é mais flexível e amplamente utilizado, pois permite ao recetor interpretar dinamicamente os parâmetros de cada pacote recebido, sendo ideal para sistemas onde os pacotes podem ter tamanhos ou configurações distintas.  
 
-Por outro lado, no modo \textbf{implícito} ($H = 1$), o cabeçalho é omitido, reduzindo ligeiramente o tamanho e o tempo total de transmissão do pacote. Contudo, este modo requer que o recetor conheça previamente todos os parâmetros de configuração da transmissão (comprimento da carga útil, taxa de codificação e presença do \gls{crc}), uma vez que essas informações não são incluídas no próprio pacote.  
+Por outro lado, no modo implícito ($H = 1$), o cabeçalho é omitido, reduzindo ligeiramente o tamanho e o tempo total de transmissão do pacote. Contudo, este modo requer que o recetor conheça previamente todos os parâmetros de configuração da transmissão (comprimento da carga útil, taxa de codificação e presença do \gls{crc}), uma vez que essas informações não são incluídas no próprio pacote.  
 
 Em resumo, o modo explícito oferece maior robustez e compatibilidade, enquanto o modo implícito privilegia a eficiência temporal e é mais adequado para sistemas com configuração fixa e comunicação previamente acordada entre emissor e recetor.
 
@@ -299,7 +299,9 @@ Aplicando estas fórmulas ao exemplo descrito, com SF12, BW de 125 kHz e CR = 4/
 
 Assim, ainda que o alcance teórico permaneça constante (pois depende apenas de SF, BW e CR), o alcance efetivo em cenários práticos é superior para mensagens mais curtas. Isto deve-se ao facto de pacotes mais compactos reduzirem a probabilidade de erros acumulados, a taxa de colisões e o tempo de ocupação do canal, contribuindo para uma comunicação mais robusta e eficiente.
 
-Ainda no pacote de comunicação encontra-se a classe \texttt{Led}, que abstrai o controlo visual do sistema através de \gls{led} de estado. Esta classe disponibiliza métodos simples como \texttt{on()}, \texttt{off()} e \texttt{blink(duration, interval)}, sendo que o comportamento intermitente é implementado de forma não bloqueante mediante a chamada periódica do método \texttt{update()}.  
+Ainda no pacote de comunicação encontra-se a classe \texttt{Led}, que abstrai o controlo visual do sistema através de \gls{led} de estado. Esta classe disponibiliza métodos simples como \texttt{on()}, \texttt{off()} e \texttt{blink(duration, interval)}, sendo que o comportamento intermitente é implementado de forma não bloqueante mediante a chamada periódica do método \texttt{update()} apresentado na Listagem~\ref{lst:led-cpp}.
+
+\lstinputlisting[caption=Método \texttt{update()} da classe \texttt{Led}, label={lst:led-cpp}, style=BetterCPP]{code/minimal/update_led.cpp}
 
 Finalmente, a lógica de navegação e controlo do veículo foi encapsulada no pacote \texttt{Control}. A classe \texttt{Control} é responsável por gerir a alternância entre o modo manual e o modo automático, utilizando os dados dos sensores e os comandos recebidos via comunicação para determinar as ações a aplicar nos propulsores. No modo manual, os comandos são traduzidos diretamente em ações sobre os motores. No modo automático, foi implementado um controlo simples baseado em lógica \emph{on/off}: sempre que o erro de rumo (\emph{bearing}) é positivo, o veículo corrige para a esquerda, e quando o erro é negativo, corrige para a direita. Apesar de simples, este método revelou-se eficaz para um protótipo de dois propulsores. No entanto, a arquitetura modular permite a substituição futura deste mecanismo por controladores mais avançados, como \acrfull{pid} ou \acrfull{lqr}, sem impacto significativo no restante sistema.  
 
@@ -311,7 +313,7 @@ O método \texttt{control()} (linhas 1-25) inicia verificando o estado atual do 
 
 No modo automático, o método \texttt{automaticControl()} (linhas 27-36) verifica se todos os \emph{waypoints} definidos foram percorridos. Caso isso ocorra, o \gls{led} automático entra em modo intermitente (linha 31) e o movimento é interrompido (linha 32), sinalizando o fim da missão. Caso contrário, é chamado o método \texttt{setCourse()} (linha 35), que recebe como parâmetro o erro de rumo acumulado (\texttt{lastBearingError}) e executa a correção necessária.  
 
-A lógica implementada em \texttt{setCourse()} (linhas 38-52) baseia-se diretamente no sinal desse erro. Valores positivos correspondem a desvios que requerem uma correção para a direita (linhas 40-43), enquanto valores negativos exigem correções para a esquerda (linhas 44-47). Quando o erro é nulo (linhas 48-51), o movimento está exatamente alinhado logo movimenta-se apenas para a frente com a chamada a \texttt{movement.front()}. Trata-se, portanto, de um controlador simples do tipo \emph{on/off}, que se revelou eficaz para o seguimento de trajetórias definidas por \emph{waypoints}.  
+A lógica implementada em \texttt{setCourse()} (linhas 38-52) baseia-se diretamente no sinal desse erro. Valores positivos correspondem a desvios que requerem uma correção para a direita (linhas 40-43), enquanto valores negativos exigem correções para a esquerda (linhas 44-47). Quando o erro é nulo (linhas 48-51), o movimento está exatamente alinhado logo movimenta-se apenas para a frente com a chamada a \texttt{movement.front()}. Trata-se, portanto, de um controlador simples do tipo \emph{on/off}, que se revelou eficaz para o seguimento de trajetórias definidas por \emph{waypoints}.
 
 Apesar de simples, este método revelou-se suficiente para o protótipo descrito neste \gls{tfm}, assegurando um comportamento previsível e estável em todas as fases de teste. A arquitetura modular permite ainda a substituição futura desta lógica por controladores mais avançados, como \acrfull{pid} ou \acrfull{lqr}, sem impacto significativo no restante sistema.  
 
